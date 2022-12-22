@@ -22,10 +22,33 @@ app.use(express.json())
 app.get('/', function(req, res){
 
     var options = {
-        root: path.join(__dirname, 'public')
+        root: path.join(__dirname, 'public/templates')
     }
 
     res.sendFile('index.html', options, function(err){
+        console.log(err)
+    })
+})
+
+app.get('categories/', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public/templates')
+    }
+
+    res.sendFile('categories.html', options, function(err){
+        console.log(err)
+    })
+})
+
+
+app.get('cart/', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public/templates')
+    }
+
+    res.sendFile('cart.html', options, function(err){
         console.log(err)
     })
 })
