@@ -19,32 +19,35 @@
         Express serves this content, also, under the root path.
     -->
     <link rel="stylesheet" href="/css/style.css">
+    <script id="categories-content" type="text/x-handlebars-template">    
+        <ul>
+            {{# each productCategories}}
+            <li>{{this.title}}</li>
+            <img src="{{this.img_url}}">
+            {{/each}}
+        </ul>
+    </script>
 
+    <script>
+        fetch("https://wiki-shop.onrender.com/categories")
+        .then((data) => data.json())
+        .then((categoryData) => {
+                let template = document.getElementById("categories-content").textContent;
+                let compiledTemplate = Handlebars.compile(template);
+                let content = compiledTemplate({productCategories : categoryData});
+                document.getElementById("main-container").innerHTML += content;
+            }
+        )
+    </script>
 </head>
 
 <body>
-    <div> 
+    <div id="main-container"> 
         <!--Main content here -->
         <h1>Index Page</h1>
         <p> Index go brrrrr</p>
     </div>
 
-    <script id="categories-content" type="text/x-handlebars-template">
-        <ul>
-            {{# each categories}}
-            <li>{{this}}</li>
-        </ul>
-    </script>
-
-    <script>
-        let categoryData = fetch("https://wiki-shop.onrender.com/categories")
-                            .then((data) => data.json())
-
-        let template = document.getElementById("categories-content").textContent;
-        let compiledTemplate = Handlebars.compile(template);
-
-        let content = compiledTemplate({categories : categoryData});
-    </script>
 </body>
 
 </html>
