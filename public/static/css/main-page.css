@@ -1,0 +1,55 @@
+.product {
+    border: 1px solid #340055;
+    margin: 0.5rem;
+    flex-grow: 1;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main-container, #main-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.inside-product {
+    width: 100%;
+}
+
+.big-box {
+    width: 100%;
+    flex: 100%;
+}
+
+.small-box {
+    width: 33%;
+    flex: 33%
+}
+
+
+/* // Large devices (desktops, 992px and down) */
+@media (max-width: 992px) {
+    .small-box {
+        width: 33%;
+        flex: 33%
+    }
+}
+
+/* // Medium devices (tablets, 768px and down) */
+@media (max-width: 768px) {
+    .small-box {
+        width: 50%;
+        flex: 50%
+    }
+
+}
+
+/* Small devices (landscape phones, 576px and down) */
+@media (max-width: 576px) {
+    .small-box {
+        width: 100%;
+        flex: 100%;
+    }
+}
