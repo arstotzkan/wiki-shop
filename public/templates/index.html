@@ -12,13 +12,13 @@
         Load the JS code for the page. The code is located inside the public folder.
         However, express serves this content under root path (see appropriate command in index.js)
     -->
-    <script src="/js/main.js" type="text/javascript"></script>
+    <script src="../static/js/main.js" type="text/javascript"></script>
 
     <!--
         Load CSS stylesheets from folder public/css/style.css.
         Express serves this content, also, under the root path.
     -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <script id="categories-content" type="text/x-handlebars-template">    
         <ul>
             {{# each productCategories}}
