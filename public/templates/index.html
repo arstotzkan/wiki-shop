@@ -29,6 +29,22 @@
         <p> Index go brrrrr</p>
     </div>
 
+    <script id="categories-content" type="text/x-handlebars-template">
+        <ul>
+            {{# each categories}}
+            <li>{{this}}</li>
+        </ul>
+    </script>
+
+    <script>
+        let categoryData = fetch("https://wiki-shop.onrender.com/categories")
+                            .then((data) => data.json())
+
+        let template = document.getElementById("categories-content").textContent;
+        let compiledTemplate = Handlebars.compile(template);
+
+        let content = compiledTemplate({categories : categoryData});
+    </script>
 </body>
 
 </html>
