@@ -28,26 +28,54 @@
         </ul>
     </script>
 
+    <script id="header-partial" type="text/x-handlebars-template">    
+        {{> header}}
+    </script>
+    
+    <script id="sidebar-partial" type="text/x-handlebars-template">  
+        {{> sidebar}}  
+    </script>
+
+    <script id="footer-partial" type="text/x-handlebars-template">  
+        {{> footer}}  
+    </script>
+
     <script>
-        fetch("https://wiki-shop.onrender.com/categories")
-        .then((data) => data.json())
-        .then((categoryData) => {
-                let template = document.getElementById("categories-content").textContent;
+        window.onload = function(){
+            fetch("https://wiki-shop.onrender.com/categories")
+            .then((data) => data.json())
+            .then((categoryData) => {
+                    let template = document.getElementById("categories-content").textContent;
+                    let compiledTemplate = Handlebars.compile(template);
+                    let content = compiledTemplate({productCategories : categoryData});
+                    document.getElementById("main-container").innerHTML += content;
+                }
+            )
+
+            for (let partial of ["header-partial", "sidebar-partial", "footer-partial"]){
+                let name = partial.split("-")[0]
+
+                let template = document.getElementById(partial).textContent;
                 let compiledTemplate = Handlebars.compile(template);
-                let content = compiledTemplate({productCategories : categoryData});
-                document.getElementById("main-container").innerHTML += content;
+                console.log(document.getElementById(name))
+                Handlebars.registerPartial(name, `partials/${name}.handlebars`);
+
+                document.getElementById(name).innerHTML = compiledTemplate()
             }
-        )
+        }
+
     </script>
 </head>
 
 <body>
+    <div id="header"></div>
+    <div id="sidebar"></div>
     <div id="main-container"> 
         <!--Main content here -->
         <h1>Index Page</h1>
         <p> Index go brrrrr</p>
     </div>
-
+    <div id="footer"></div>
 </body>
 
 </html>
