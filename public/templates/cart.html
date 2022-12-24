@@ -13,6 +13,7 @@
         However, express serves this content under root path (see appropriate command in index.js)
     -->
     <script src="../static/js/main.js" type="text/javascript"></script>
+    <script src="../static/js/pageSetUp.js" type="text/javascript"></script>
 
     <!--
         Load CSS stylesheets from folder public/css/style.css.
@@ -20,16 +21,35 @@
     -->
     <link rel="stylesheet" href="../static/css/style.css">
 
+    <script id="categories-content" type="text/x-handlebars-template">  
+
+        {{>header}}
+        {{>sidebar}}
+
+        <div id="main-container">
+            <h1>Cart</h1>
+            <p> Cart items go brrrrr</p>
+        </ul>
+
+        {{>footer}}
+    </script>
+
+    <script>
+        fetch("https://wiki-shop.onrender.com/categories") //will change url when it works
+        .then((data) => data.json())
+        .then((categoryData) => {
+                let template = document.getElementById("categories-content").textContent;
+                let compiledTemplate = Handlebars.compile(template);
+                let content = compiledTemplate({productCategories : categoryData});
+                document.querySelector("body").innerHTML += content;
+            }
+        )
+    </script>
+
+    </script>
 </head>
 
 <body>
-    
-
-    <div> 
-    <!--Main content here -->
-    <h1>Cart</h1>
-    <p> Cart items go brrrrr</p>
-    </div>
 
 </body>
 
