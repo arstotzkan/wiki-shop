@@ -13,69 +13,45 @@
         However, express serves this content under root path (see appropriate command in index.js)
     -->
     <script src="../static/js/main.js" type="text/javascript"></script>
+    <script src="../static/js/pageSetUp.js" type="text/javascript"></script>
 
     <!--
         Load CSS stylesheets from folder public/css/style.css.
         Express serves this content, also, under the root path.
     -->
     <link rel="stylesheet" href="../static/css/style.css">
-    <script id="categories-content" type="text/x-handlebars-template">    
-        <ul>
+
+    <script id="categories-content" type="text/x-handlebars-template">  
+
+        {{>header}}
+        {{>sidebar}}
+
+        <div id="main-container">
             {{# each productCategories}}
             <li>{{this.title}}</li>
             <img src="{{this.img_url}}">
             {{/each}}
         </ul>
-    </script>
 
-    <script id="header-partial" type="text/x-handlebars-template">    
-        {{> header}}
-    </script>
-    
-    <script id="sidebar-partial" type="text/x-handlebars-template">  
-        {{> sidebar}}  
-    </script>
-
-    <script id="footer-partial" type="text/x-handlebars-template">  
-        {{> footer}}  
+        {{>footer}}
     </script>
 
     <script>
-        window.onload = function(){
-            fetch("https://wiki-shop.onrender.com/categories")
-            .then((data) => data.json())
-            .then((categoryData) => {
-                    let template = document.getElementById("categories-content").textContent;
-                    let compiledTemplate = Handlebars.compile(template);
-                    let content = compiledTemplate({productCategories : categoryData});
-                    document.getElementById("main-container").innerHTML += content;
-                }
-            )
-
-            for (let partial of ["header-partial", "sidebar-partial", "footer-partial"]){
-                let name = partial.split("-")[0]
-
-                let template = document.getElementById(partial).textContent;
+        fetch("https://wiki-shop.onrender.com/categories")
+        .then((data) => data.json())
+        .then((categoryData) => {
+                let template = document.getElementById("categories-content").textContent;
                 let compiledTemplate = Handlebars.compile(template);
-                console.log(document.getElementById(name))
-                Handlebars.registerPartial(name, `partials/${name}.handlebars`);
-
-                document.getElementById(name).innerHTML = compiledTemplate()
+                let content = compiledTemplate({productCategories : categoryData});
+                document.querySelector("body").innerHTML += content;
             }
-        }
+        )
+        
 
     </script>
 </head>
 
 <body>
-    <div id="header"></div>
-    <div id="sidebar"></div>
-    <div id="main-container"> 
-        <!--Main content here -->
-        <h1>Index Page</h1>
-        <p> Index go brrrrr</p>
-    </div>
-    <div id="footer"></div>
 </body>
 
 </html>
