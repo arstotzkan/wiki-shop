@@ -22,7 +22,7 @@ app.use(express.json())
 app.get('/', function(req, res){
 
     var options = {
-        root: path.join(__dirname, 'public/templates')
+        root: path.join(__dirname, 'public', 'templates')
     }
 
     res.sendFile('index.html', options, function(err){
@@ -30,25 +30,61 @@ app.get('/', function(req, res){
     })
 })
 
-app.get('categories/', function(req, res){
+app.get('/categories', function(req, res){
 
     var options = {
-        root: path.join(__dirname, 'public/templates')
+        root: path.join(__dirname, 'public', 'templates')
     }
+    console.log(__dirname);
 
     res.sendFile('categories.html', options, function(err){
+        
         console.log(err)
     })
 })
 
 
-app.get('cart/', function(req, res){
+app.get('/cart', function(req, res){
 
     var options = {
-        root: path.join(__dirname, 'public/templates')
+        root: path.join(__dirname, 'public', 'templates')
     }
 
     res.sendFile('cart.html', options, function(err){
         console.log(err)
+    })
+})
+
+//FOR AJAX
+app.get('/site/header', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public', 'templates', 'partials')
+    }
+
+    res.sendFile('header.html', options, function(err){
+        console.log(err)
+    })
+})
+
+app.get('/site/sidebar', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public', 'templates', 'partials')
+    }
+
+    res.sendFile('sidebar.html', options, function(err){
+        console.log(err)
+    })
+})
+
+app.get('/site/footer', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public', 'templates', 'partials')
+    }
+
+    res.sendFile('footer.html', options, function(err){
+        console.log(err);
     })
 })
