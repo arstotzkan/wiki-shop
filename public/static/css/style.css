@@ -329,11 +329,8 @@ aside {
     display: block;
 }
 
-#main-container, #main-content {
+.card {
     color: #000;
-}
-
-#main-content {
     width: 90%;
     background-color: #d7d7d7;
 }
@@ -421,19 +418,6 @@ aside {
     align-items: center;
 }
 
-.item {
-    display: flex;
-    justify-content: center;
-}
-
-.flex-g-1 {
-    flex-grow: 1;
-}
-
-.my_button {
-    align-items: center;
-    display: flex;
-}
 
 #sidebar li:hover {
     background-color: #d7d7d7;
@@ -507,131 +491,6 @@ aside {
 
 }
 
-/* Small devices (landscape phones, 576px and down) */
-@media (max-width: 576px) {
-
-}
-
-/*CATEGORIES*/
-#product-categories {
-    width: 90%
-}
-
-.product-category-container {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-
-    display: flex;
-    align-items: end;
-    flex-wrap: wrap;
-}
-
-.product-category-container li {
-    width: 25%;
-}
-
-.product-category-container img {
-    width: 60%;
-    height: fit-content;
-}
-
-.product-category-container .category-header {
-    width: 100%;
-    padding-bottom: 1rem;
-}
-
-.category-list {
-    /*Size of list, floating and live space from bottom*/
-    height: max(5rem, auto);
-    margin-bottom: 1rem;
-}
-
-@media (max-width: 992px) {
-    .product-category-container li {
-        width: 50%;
-    }
-}
-
-@media (max-width: 576px) {
-    .product-category-container li {
-        width: 100%;
-    }
-}
-
-/*For phones and tablets bios*/
-@media screen and (max-width: 992px) {
-
-    body #bio {
-        /*Make text justify and take more screen*/
-        width: 80%;
-        text-align: justify;
-    }
-
-    #bio h2 {
-        /*Center header and fix line height*/
-        text-align: center;
-        line-height: normal;
-    }
-}
-
-/*For phones*/
-@media screen and (max-width: 576px) {
-
-    body #laptops-list img {
-        /*Image size inside in headers for laptop list*/
-        width: 8rem;
-        height: 7rem;
-    }
-
-    body #laptops-list li, #phones-list li {
-        margin-bottom: 1rem;
-    }
-
-    body #phones-list img {
-        /*Image width inside in headers for laptop list*/
-        height: 8rem;
-    }
-
-    body .product-header-text {
-        padding: 0;
-        margin: 0;
-    }
-
-    body #opening-hours {
-        float: none;
-        margin: 0;
-    }
-
-    ul {
-        padding-left: 0.5rem;
-    }
-
-    h3 {
-        margin: 0.5rem;
-    }
-
-    .item {
-        display: grid;
-        justify-items: center;
-    }
-
-    .my_image {
-        display: grid;
-        grid-area: 1/1/2/2;
-    }
-
-    .my_text {
-        display: grid;
-        grid-area: 1/2/3/3;
-    }
-
-    .my_button {
-        display: grid;
-        grid-area: 2/1/3/2;
-
-    }
-}
 
 .text-center{
     text-align: center;

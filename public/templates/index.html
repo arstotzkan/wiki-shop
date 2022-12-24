@@ -28,8 +28,10 @@
 
         <div id="main-container">
             {{# each productCategories}}
-            <li>{{this.title}}</li>
-            <img src="{{this.img_url}}">
+            <div class="card">
+                <li>{{this.title}}</li>
+                <img src="{{this.img_url}}">
+            </div>
             {{/each}}
         </ul>
 
