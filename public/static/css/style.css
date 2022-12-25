@@ -197,12 +197,24 @@ a, a:hover, a:visited, a:active {
     text-decoration: none;
 }
 
+#filter {
+    width: max(20%, auto);
+    margin: 0;
+    position: fixed;
+    top: 8rem;
+    z-index: 2;
+}
+
+#filter label {
+    display: inline-block;
+    width: 8rem;
+}
+
 form {
     /*Text color and alignment. Border, width and space around inside form. Space left outside the form*/
     text-align: left;
     border: 2px solid #2e5193;
-    width: 30rem;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 1rem;
 }
 
@@ -213,7 +225,6 @@ fieldset {
 
 input {
     /*Specifies input's width*/
-    width: 10rem;
     margin: 0.1rem;
     border-radius: 0.4rem;
 }
