@@ -30,20 +30,18 @@
         {{>header}}
         {{>sidebar}}
 
-        <div id="main-container">
-            <div id="main-content">
-                <nav id="product-categories">
-                    <ul class="product-category-container no-bull">
-                        {{# each productCategories}}
-                        <div class="card">
-                            <a href="categories?categoryId={{this.id}}&categoryName={{this.title}}">
-                                <li>{{this.title}}</li>
-                                <img src="{{this.img_url}}" alt="category-image">
-                            </a>
-                        </div>
-                        {{/each}}
-                    </ul>
-                </nav>
+        <div id="main-container" class="flex-container justify-content-center">
+            <div class="card ">
+                <ul class="product-category-container no-bull flex-container">
+                    {{# each productCategories}}
+                    <li class="w-33">
+                        <a href="categories?categoryId={{this.id}}&categoryName={{this.title}}">
+                            <h3 class="text-center">{{this.title}}</h3>
+                            <img src="{{this.img_url}}" alt="category-image" class="w-100">
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
 
