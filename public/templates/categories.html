@@ -34,12 +34,12 @@
             <div id="main-content">
                 <section id="product-list">
                     <header id="product-category-name">
-                        <h1>{{prod_name}}</h1>
+                        <h1>{{cat_name}}</h1>
                     </header>
                     
                     <ul class="no-bull ">
                         {{# each product}}
-                            <li class="product card">
+                            <li class="product card" data-subcategory-id="{{this.subcategory_id}}">
                                 <div class="product-image-pos">
                                     <img src="{{this.image}}" alt="product-image">
                                 </div>
@@ -62,7 +62,21 @@
         {{>footer}}
     </script>
     
-    <script>
+    <script id="product-filter" type="text/x-handlebars-template">
+        <aside id="filter">
+            <form method="get">
+                <label for="all">All</label>
+                <input id="all" name="sub-category" type="radio" value="all" checked>
+                {{# each subCategory}}
+                    <br>
+                    <label for="{{this.id}}">{{this.title}}</label>
+                    <input id="{{this.id}}" name="sub-category" type="radio" value="{{this.id}}">
+                {{/each}}
+            </form>
+        </aside>
+    </script>
+    
+    <script type="text/javascript">
         const category_id = new URLSearchParams(window.location.search).get('categoryId')
         const category_name = new URLSearchParams(window.location.search).get('categoryName');
         console.log(category_id, category_name)
@@ -72,10 +86,41 @@
                     .then((productData) => {
                                 let template = document.getElementById("products-content").textContent;
                                 let compiledTemplate = Handlebars.compile(template);
-                                let content = compiledTemplate({product: productData, prod_name: category_name});
+                                let content = compiledTemplate({product: productData, cat_name: category_name});
                                 document.querySelector("body").innerHTML += content;
                             }
                     )
+                    .then(() =>{
+                        fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/subcategories")
+                                .then((data) => data.json())
+                                .then((subCategoriesData) => {
+                                            let template = document.getElementById("product-filter").textContent;
+                                            let compiledTemplate = Handlebars.compile(template);
+                                            let content = compiledTemplate({subCategory: subCategoriesData});
+                                            document.querySelector("body").innerHTML += content;
+                                        }
+                                )
+                                .then(() => {
+                                            // console.log(document.querySelectorAll("input[name='sub-category']"));
+                                            document.querySelectorAll("input[name='sub-category']").forEach((filter) => {
+                                                filter.addEventListener("click", function(event) {
+                                                    let item = event.target.value;
+                                                    // console.log(document.querySelectorAll('li.product'));
+                                                    document.querySelectorAll('li.product').forEach((elem) => {
+                                                        // console.log("item: " + item);
+                                                        // console.log("elem sub-cat: " + elem.dataset.subcategoryId);
+                                                        if(elem.dataset.subcategoryId === item || item === 'all'){
+                                                            elem.classList.remove("display-none");
+                                                        }
+                                                        else{
+                                                            elem.classList.add("display-none");
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        }
+                                )
+                    })
         }
     </script>
 
