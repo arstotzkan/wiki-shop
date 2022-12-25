@@ -22,231 +22,18 @@ body {
     margin: 0;
     border: 0;
     padding: 0;
-    /*Grid layout with 2 columns where the second id 4 times the first*/
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-}
-
-header {
-    /*Specifies header's height*/
-    height: 2rem;
-}
-
-
-header, footer {
-    /*Make text in headers and footers smaller and bold*/
-    font-weight: bold;
-    font-size: 0.75rem;
-    width: 100%;
-}
-
-footer {
-    /*Align text in center and live some space from main content*/
-    text-align: center;
-    margin-top: 2rem;
-    /*height: 5%;*/
-    position: relative;
-    /*Grid position spans all columns and is in the last row*/
-    grid-area: 4/1/5/3;
-}
-
-footer a,
-footer a:hover,
-footer a:visited,
-footer a:active {
-    /*Link color for footers*/
-    color: #2e5193;
-}
-
-main {
-    /*Align text in center*/
-    text-align: center;
-}
-
-article > p {
-    /*Live space from top*/
-    padding-top: 5rem;
-}
-
-article > header {
-    /*Specifies the width of a header in an article*/
-    font-size: 1rem;
-    height: auto;
-    width: 100%;
-}
-
-section > header {
-    /*Header's font and text alignment*/
-    font-size: 1.4rem;
-    text-align: center;
-    width: 100%;
-}
-
-h1, h2, h3, h4 {
-    /*Header's color*/
-    color: #161e2a;
-
-}
-
-header a, header a:hover, header a:visited, header a:active,
-#sidebar a, #sidebar a:hover, #sidebar a:visited, #sidebar a:active {
-    /*Link color in headers*/
-    color: #d7d7d7;
-    text-decoration: none;
-}
-
-a, a:hover, a:visited, a:active {
-    /*Link color*/
-    color: #2e5193;
-    text-decoration: none;
-}
-
-form {
-    /*Text color and alignment. Border, width and space around inside form. Space left outside the form*/
-    text-align: left;
-    border: 2px solid #6f0b9d;
-    width: 30rem;
-    padding: 1rem;
-    margin: 1rem;
-}
-
-fieldset {
-    /*Space around fieldset*/
-    padding: 0.5rem;
-}
-
-legend {
-    /*Bold text for legends*/
-    font-weight: bold;
-}
-
-label {
-    /*Label width and top alignment*/
-    display: inline-block;
-    vertical-align: top;
-}
-
-input {
-    /*Specifies input's width*/
-    width: 10rem;
-    margin: 0.1rem;
-    border-radius: 5px;
-}
-
-input:required + span::before{
-    content: "*";
-    color: red;
-}
-
-input:required:user-invalid{
-    border: 2px solid #ce3838;
-    background-color: #d58787;
-}
-
-
-input:required:placeholder-shown{
-    background-color: white;
-    border: 2px solid;
-    border-color: #939393 #d5d4d4 #d5d4d4 #939393;
-}
-
-/*Remove Arrows in Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/*Remove Arrows in Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-strong {
-    /*Strong text is slightly bigger*/
-    font-size: 1.1rem;
-}
-
-main {
-    /*Grid position second column and is two rows high*/
-    grid-area: 2/2/4/3;
-}
-
-header:first-of-type {
-    /*Grid position spans all columns and is in the first row*/
-    grid-area: 1/1/2/3;
-}
-
-aside {
-    /*Grid position first column and is one row high*/
-    grid-area: 2/1/3/2;
-}
-
-.flex-container,
-.flex-column-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.flex-column-container {
-    flex-direction: column;
-}
-
-.justify-content-start {
-    justify-content: start;
-}
-
-.justify-content-center {
-    justify-content: center;
-}
-
-.justify-content-end {
-    justify-content: end;
-}
-
-.align-items-start{
-    align-items: start;
-}
-
-.align-items-center{
-    align-items: center;
-}
-
-.align-items-end{
-    align-items: end;
-}
-
-.special-offer {
-    border: 1px solid #340055;
-    margin: 0.5rem;
-    flex-grow: 2;
-}
-
-.to-inline-block {
-    /*Make element inline block*/
-    display: inline-block;
-}
-
-.cart {
-    /*Width for cart and make button do nothing*/
-    width: 1.3rem;
-    pointer-events: none;
-}
-
-.icon {
-    /*Width for icons*/
-    width: 1rem;
 }
 
 #top-navbar {
     display: flex;
     align-items: center;
     background-color: #15284d;
-    position: fixed;
     flex-wrap: wrap;
     width: 100%;
     height: 2rem;
-    z-index: 1;
+    z-index: 5;    
+    position: fixed;
+    top: 0;
 }
 
 #top-navbar > * {
@@ -260,6 +47,7 @@ aside {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     margin: 0;
     height: 100%
 }
@@ -290,84 +78,19 @@ aside {
     color: #15284d;
 }
 
-#main-container {
-    /*margin-left: 20%;*/
-    display: block;
-}
-
-#main-logo {
-    font-size: 1rem;
-}
-
-/*index.html*/
-#product-categories {
-    width: 90%
-}
-
-.product-category-container {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-
-    display: flex;
-    align-items: end;
-    flex-wrap: wrap;
-}
-
-.no-bull {
-    /*Make lists have no bullets*/
-    list-style-type: none;
-}
-
-.card {
-    color: #000;
-    width: 90%;
-    background-color: #d7d7d7;
-}
-/*-----------------*/
-
-/*categories.html*/
-#product-list img{
-    /*Size of list and live space around*/
-    width: 12rem;
-    margin: 0.5rem;
-}
-
-.product {
-    display: flex;
-    justify-content: center;
-}
-
-.flex-g-1 {
-    flex-grow: 1;
-}
-
-.product-header-text {
-    /*Elements have blank space from top*/
-    padding-bottom: 2rem;
-}
-
-.add-to-cart-pos {
-    align-items: center;
-    display: flex;
-}
-
-.addtocart {
-    /*Color, text format and size for button add to cart*/
-    background-color: #153360;
-    border-radius: 0.5rem;
-    color: #d7d7d7;
+#top-navbar, #footer {
+    /*Make text in headers and footers smaller and bold*/
     font-weight: bold;
-    font-size: 1rem;
-    width: 6rem;
-    height: 2rem;
+    font-size: 0.75rem;
+    width: 100%;
 }
 
-.addtocart:hover {
-    /*Change color when button add to cart is hovered*/
-    background-color: #0b51ad;
+#top-navbar a, #top-navbar a:hover, #top-navbar a:visited, #top-navbar a:active,
+#sidebar a, #sidebar a:hover, #sidebar a:visited, #sidebar a:active {
+    /*Link color in headers*/
+    color: #d7d7d7;
+    text-decoration: none;
 }
-/*----------------------*/
 
 .shadow {
     box-shadow: 5px 5px 10px #0e2450;
@@ -379,6 +102,7 @@ aside {
     background: #15284d;
     color: #d7d7d7;
     position: fixed;
+    top: 2rem;
     z-index: 2;
 }
 
@@ -417,10 +141,166 @@ aside {
     color: #15284d;
 }
 
+footer {
+    /*Align text in center and live some space from main content*/
+    text-align: center;
+    margin-top: 2rem;
+    /*height: 5%;*/
+    position: relative;
+    /*Grid position spans all columns and is in the last row*/
+    grid-area: 4/1/5/3;
+}
+
+footer a,
+footer a:hover,
+footer a:visited,
+footer a:active {
+    /*Link color for footers*/
+    color: #2e5193;
+}
+
 #opening-hours {
     /*Position and space around for opening hours*/
     float: right;
     margin-right: 2rem;
+}
+
+main {
+    /*Align text in center*/
+    text-align: center;
+}
+
+#main-container {
+    margin-left: 25%;
+    margin-right: 5%;
+    margin-top: 3rem;
+    display: block;
+}
+
+.card {
+    color: #000;
+    background-color: #ffffff;
+}
+
+#main-logo {
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4 {
+    /*Header's color*/
+    color: #161e2a;
+}
+
+a, a:hover, a:visited, a:active {
+    /*Link color*/
+    color: #2e5193;
+    text-decoration: none;
+}
+
+form {
+    /*Text color and alignment. Border, width and space around inside form. Space left outside the form*/
+    text-align: left;
+    border: 2px solid #2e5193;
+    width: 30rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+fieldset {
+    /*Space around fieldset*/
+    padding: 0.5rem;
+}
+
+input {
+    /*Specifies input's width*/
+    width: 10rem;
+    margin: 0.1rem;
+    border-radius: 0.4rem;
+}
+
+input:required + span::before{
+    content: "*";
+    color: red;
+}
+
+input:required:user-invalid{
+    border: 2px solid #ce3838;
+    background-color: #d58787;
+}
+
+input:required:placeholder-shown{
+    background-color: white;
+    border: 2px solid;
+    border-color: #939393 #d5d4d4 #d5d4d4 #939393;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.flex-container,
+.flex-column-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-column-container {
+    flex-direction: column;
+}
+
+.justify-content-start {
+    justify-content: start;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+
+.align-items-start{
+    align-items: start;
+}
+
+.align-items-center{
+    align-items: center;
+}
+
+.align-items-end{
+    align-items: end;
+}
+
+.to-inline-block {
+    /*Make element inline block*/
+    display: inline-block;
+}
+
+.cart {
+    /*Width for cart and make button do nothing*/
+    width: 1.3rem;
+    pointer-events: none;
+}
+
+.icon {
+    /*Width for icons*/
+    width: 1rem;
+}
+
+.no-bull {
+    /*Make lists have no bullets*/
+    list-style-type: none;
+}
+
+.shadow {
+    box-shadow: 5px 5px 10px #0e2450;
 }
 
 .material-icons, #main-logo {
@@ -438,10 +318,16 @@ aside {
     display: none !important;
 }
 
+.w-33{
+    width: 33%;
+}
 
-/* // Large devices (desktops, 992px and down) */
-@media (max-width: 992px) {
+.w-50{
+    width: 50%;
+}
 
+.w-100{
+    width: 100%;
 }
 
 /* // Medium devices (tablets, 768px and down) */
@@ -451,34 +337,33 @@ aside {
         display: none;
     }
 
-    body {
-        display: grid;
-        grid-row-gap: 3rem;
+    #main-container{
+        margin-left: 5%;
+        margin-top: 6.5rem;
     }
 
-    main {
-        width: 100%;
-        grid-area: 2/1/4/3;
-    }
 
     #top-navbar {
         height: auto;
     }
 
     #shop-name, #search-bar {
-        flex: 1 0 80%;
+        flex: 1 0 60%;
         width: 100%;
+        height: 1.5rem;
         justify-self: center;
     }
 
     #shop-name {
         text-align: center;
+        height: 2rem;
     }
 
     #top-right-nav {
         flex: 1 0 100%;
         width: 100%;
         justify-self: center;
+        height: 2rem;
     }
 
     #top-right-nav .top-right-item {
@@ -491,15 +376,7 @@ aside {
 
 /*For phones*/
 @media screen and (max-width: 576px) {
-    body #product-list img {
-        /*Image size inside in headers for laptop list*/
-        width: 8rem;
-        height: 7rem;
-    }
 
-    body #product-list li{
-        margin-bottom: 1rem;
-    }
 
     ul {
         padding-left: 0.5rem;
@@ -509,24 +386,4 @@ aside {
         margin: 0.5rem;
     }
 
-    .product {
-        display: grid;
-        justify-items: center;
-    }
-
-    .product-image-pos {
-        display: grid;
-        grid-area: 1/1/2/2;
-    }
-
-    .product-desc {
-        display: grid;
-        grid-area: 1/2/3/3;
-    }
-
-    .add-to-cart-pos {
-        display: grid;
-        grid-area: 2/1/3/2;
-
-    }
 }
