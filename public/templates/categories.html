@@ -22,6 +22,7 @@
     -->
     <link href="../static/images/icons/icon1.png" rel="icon" type="image/png">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/categories.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,500,0..1,-50..200"
           rel="stylesheet"/>
     
@@ -36,9 +37,9 @@
                         <h1>{{prod_name}}</h1>
                     </header>
                     
-                    <ul class="no-bull">
+                    <ul class="no-bull ">
                         {{# each product}}
-                            <li class="product">
+                            <li class="product card">
                                 <div class="product-image-pos">
                                     <img src="{{this.image}}" alt="product-image">
                                 </div>
@@ -64,8 +65,9 @@
     <script>
         const category_id = new URLSearchParams(window.location.search).get('categoryId')
         const category_name = new URLSearchParams(window.location.search).get('categoryName');
+        console.log(category_id, category_name)
         window.onload = function() {
-            fetch("http://127.0.0.1:5000/https://wiki-shop.onrender.com/categories/" + category_id + "/products")
+            fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products")
                     .then((data) => data.json())
                     .then((productData) => {
                                 let template = document.getElementById("products-content").textContent;
