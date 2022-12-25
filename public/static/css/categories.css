@@ -1,0 +1,47 @@
+/*categories.html*/
+#product-list img{
+    /*Size of list and live space around*/
+    width: 12rem;
+    margin: 0.5rem;
+}
+
+ul{
+    padding: 0;
+}
+.product {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+}
+
+.flex-g-1 {
+    flex-grow: 1;
+}
+
+.product-header-text {
+    /*Elements have blank space from top*/
+    padding-bottom: 2rem;
+}
+
+.add-to-cart-pos {
+    align-items: center;
+    display: flex;
+}
+
+.addtocart {
+    /*Color, text format and size for button add to cart*/
+    background-color: #153360;
+    border-radius: 0.5rem;
+    color: #d7d7d7;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 6rem;
+    height: 2rem;
+}
+
+.addtocart:hover {
+    /*Change color when button add to cart is hovered*/
+    background-color: #0b51ad;
+}
+/*----------------------*/
