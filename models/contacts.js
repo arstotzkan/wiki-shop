@@ -3,8 +3,8 @@ e.g. carts, users etc
 */
 
 const USER_CONTROLLER = {
-    userData : [],
-    usernames : [],
+    userData : [{name: "Panos", password:"12345"}, {name:"Tasos", password: "67890"}],
+    usernames : ["Panos", "Tasos"],
 
     addUser: function(newUsername, newPassword){
         this.usernames.push(newUsername)
