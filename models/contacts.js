@@ -31,4 +31,29 @@ const USER_CONTROLLER = {
     }
 }
 
-module.exports = {USER_CONTROLLER};
+const users = [{
+    username: "test",
+    password: "password",
+    sessionId: "12345qwerty",
+    cart: []
+}];
+
+
+function CartItem(title, cost, quantity){
+    this.title = title;
+    this.cost = cost;
+    this.quantity = quantity;
+}
+
+function updateQuantity(pos, title, cost){
+    for (let i of users[pos].cart){
+        if(i.title === title){
+            i.quantity += 1;
+            return
+        }
+    }
+    users[pos].cart.push(new CartItem(title, cost, 1))
+    return
+}
+
+module.exports = {USER_CONTROLLER, users, updateQuantity};

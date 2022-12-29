@@ -50,7 +50,7 @@
                                     </article>
                                 </div>
                                 <div class="product-header-text add-to-cart-pos">
-                                    <button class="addtocart" type="button">Προσθήκη</button>
+                                    <button id="{{this.id}}" class="addtocart" type="button" onclick="addcart(id)" data-title="{{this.title}}" data-cost="{{this.cost}}">Προσθήκη</button>
                                 </div>
                             </li>
                         {{/each}}
@@ -81,6 +81,29 @@
         const category_id = new URLSearchParams(window.location.search).get('categoryId')
         const category_name = new URLSearchParams(window.location.search).get('categoryName');
         console.log(category_id, category_name)
+
+        function addcart(id) {
+            let elem = document.getElementById(id);
+            let prodTitle = elem.dataset.title.toString()
+            let prodCost = elem.dataset.cost.toString()
+            let myHeaders = new Headers();
+            myHeaders.append('Content-type', 'application/json');
+            let init = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify({name: "test", sessionId: "12345qwerty", title: prodTitle, cost: prodCost})
+            }
+            fetch("addtocart", init)
+                    .then(response => {
+                        if (response.status == 201){
+                            // console.log("Product: " + prodTitle + " added to cart.");
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+        }
+        
         window.onload = function() {
             fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products")
                     .then((data) => data.json())
@@ -122,6 +145,7 @@
                                         }
                                 )
                     })
+            
         }
     </script>
 

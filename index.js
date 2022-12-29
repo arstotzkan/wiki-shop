@@ -105,6 +105,21 @@ app.post("/check-login", function(req, res) {
     }
 })
 
+app.post('/addtocart', function(req, res){
+    if(req.header('Content-type') === 'application/json'){
+        //console.log(req.body);
+        for (let i=0; i<contacts.users.length; i++){
+            if (contacts.users[i].username === req.body.name){
+                if (contacts.users[i].sessionId === req.body.sessionId){
+                    contacts.updateQuantity(i, req.body.title, req.body.cost)
+                    // console.log(contacts.users[i].cart)
+                }
+            }
+        }
+        res.status(201).send()
+    }
+})
+
 
 //FOR AJAX
 app.get('/site/header', function(req, res){
