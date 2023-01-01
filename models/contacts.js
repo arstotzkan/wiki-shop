@@ -3,12 +3,12 @@ e.g. carts, users etc
 */
 
 const USER_CONTROLLER = {
-    userData : [{name: "Panos", password:"12345"}, {name:"Tasos", password: "67890"}],
+    userData : [{name: "Panos", password:"12345", cart: []}, {name:"Tasos", password: "67890", cart: []}],
     usernames : ["Panos", "Tasos"],
 
     addUser: function(newUsername, newPassword){
         this.usernames.push(newUsername)
-        this.userData.push({name: newUsername, password: newPassword})
+        this.userData.push({name: newUsername, password: newPassword, cart: []})
     },
 
     usernameTaken: function (newUsername){
@@ -28,16 +28,34 @@ const USER_CONTROLLER = {
 
     userDataIsCorrect: function(userObj, username, password){
         return userObj.name === username && userObj.password === password
+    },
+
+    updateQuantity: function(user, title, cost){
+        for (let i of user.cart){
+            if(i.title === title){
+                i.quantity += 1;
+                return
+            }
+        }
+        user.cart.push(new CartItem(title, cost, 1))
+    },
+
+    sizeOfCart: function(user){
+        let size = 0;
+        for (let i of user.cart){
+            size += i.quantity
+        }
+        return {"size": size};
+    },
+
+    totalCostOfCart: function (user){
+        let total_cost = 0;
+        for (let p of user.cart){
+            total_cost += p.cost * p.quantity;
+        }
+        return total_cost
     }
 }
-
-const users = [{
-    username: "test",
-    password: "password",
-    sessionId: "12345qwerty",
-    cart: []
-}];
-
 
 function CartItem(title, cost, quantity){
     this.title = title;
@@ -45,15 +63,4 @@ function CartItem(title, cost, quantity){
     this.quantity = quantity;
 }
 
-function updateQuantity(pos, title, cost){
-    for (let i of users[pos].cart){
-        if(i.title === title){
-            i.quantity += 1;
-            return
-        }
-    }
-    users[pos].cart.push(new CartItem(title, cost, 1))
-    return
-}
-
-module.exports = {USER_CONTROLLER, users, updateQuantity};
+module.exports = {USER_CONTROLLER};

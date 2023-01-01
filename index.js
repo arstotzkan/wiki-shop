@@ -108,15 +108,38 @@ app.post("/check-login", function(req, res) {
 app.post('/addtocart', function(req, res){
     if(req.header('Content-type') === 'application/json'){
         //console.log(req.body);
-        for (let i=0; i<contacts.users.length; i++){
-            if (contacts.users[i].username === req.body.name){
-                if (contacts.users[i].sessionId === req.body.sessionId){
-                    contacts.updateQuantity(i, req.body.title, req.body.cost)
-                    // console.log(contacts.users[i].cart)
-                }
-            }
+        const user = USER_CONTROLLER.getUserFromUsername(req.body.name);
+        if (user != null){
+            // if (user.sessionId === req.body.sessionId){
+                USER_CONTROLLER.updateQuantity(user, req.body.title, req.body.cost);
+                console.log(user.cart);
+                res.status(201).send();
+            // }
         }
-        res.status(201).send()
+        else{
+            res.status(401).send()
+        }
+    }
+    else{
+        res.status(400).send()
+    }
+})
+
+app.get('/sizeofcart', function(req, res){
+    if(req.header('Content-type') === 'application/json'){
+        //console.log(req.body);
+        const user = USER_CONTROLLER.getUserFromUsername(req.header('Name'));
+        if (user != null){
+            // if (user.sessionId === req.body.sessionId){
+            let cart_size = USER_CONTROLLER.sizeOfCart(user);
+            // console.log(user.cart);
+            // console.log(cart_size);
+            res.status(200).send(cart_size);
+            // }
+        }
+    }
+    else{
+        res.status(400).send()
     }
 })
 
