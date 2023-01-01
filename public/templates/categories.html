@@ -31,6 +31,7 @@
         {{>sidebar}}
         
         <main id="main-container">
+            <span id="logged_in_popup" class="display-none">You have to be logged in to <br>add products in the cart !</span>
             <div id="main-content">
                 <section id="product-list">
                     <header id="product-category-name">
@@ -77,31 +78,58 @@
         </aside>
     </script>
     
+    <script id="size-of-cart" type="text/x-handlebars-template">
+        <div id="cart-size">
+            {{a}}
+        </div>
+    </script>
+    
     <script type="text/javascript">
         const category_id = new URLSearchParams(window.location.search).get('categoryId')
         const category_name = new URLSearchParams(window.location.search).get('categoryName');
+        const user_name = new URLSearchParams(window.location.search).get('userName');
+        const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
+        let cart_size = 0;
         console.log(category_id, category_name)
 
         function addcart(id) {
-            let elem = document.getElementById(id);
-            let prodTitle = elem.dataset.title.toString()
-            let prodCost = elem.dataset.cost.toString()
-            let myHeaders = new Headers();
-            myHeaders.append('Content-type', 'application/json');
-            let init = {
-                method: "POST",
-                headers: myHeaders,
-                body: JSON.stringify({name: "test", sessionId: "12345qwerty", title: prodTitle, cost: prodCost})
+            if(true){ // user_name == null || user_session_id == null
+                let popup = document.getElementById("logged_in_popup");
+                popup.classList.remove("display-none");
+                popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
             }
-            fetch("addtocart", init)
-                    .then(response => {
-                        if (response.status == 201){
-                            // console.log("Product: " + prodTitle + " added to cart.");
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
+            else{
+                let elem = document.getElementById(id);
+                let prodTitle = elem.dataset.title.toString()
+                let prodCost = elem.dataset.cost.toString()
+                let myHeaders = new Headers();
+                myHeaders.append('Content-type', 'application/json');
+                let init = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: JSON.stringify({name: "Tasos", sessionId: user_session_id, title: prodTitle, cost: prodCost})
+                }
+                fetch("addtocart", init)
+                        .then(response => {
+                            if (response.status === 201){
+                                console.log("Product: " + prodTitle + " added to cart.");
+                                document.getElementById("cart-size").classList.remove('display-none');
+                                cart_size += 1;
+                                document.getElementById("cart-size").textContent = cart_size;
+                            }
+                            else if(response.status === 401){
+                                let popup = document.getElementById("logged_in_popup");
+                                popup.classList.remove("display-none");
+                                popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
+                            }
+                            else if (response.status === 400){
+                                console.log("Something went wrong.");
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+            }
         }
         
         window.onload = function() {
@@ -145,7 +173,30 @@
                                         }
                                 )
                     })
-            
+            if(true){ // user_name != nul&& user_session_id != null){
+                let myHeaders = new Headers();
+                myHeaders.append('Content-type', 'application/json');
+                myHeaders.append('Name', 'Tasos');
+                myHeaders.append('Session-Id', 'lvckjlvkj');
+                let init = {method: "GET", headers: myHeaders}
+                fetch("sizeofcart",init)
+                        .then((data) => data.json())
+                        .then((response) => {
+                            // console.log(response);
+                            let template = document.getElementById("size-of-cart").textContent;
+                            let compiledTemplate = Handlebars.compile(template);
+                            cart_size = response.size;
+                            let content = compiledTemplate({a: cart_size});
+                            document.querySelector("body").innerHTML += content;
+                            document.getElementById("cart-size").classList.remove('display-none');
+                            if(response.size === 0){
+                                document.getElementById("cart-size").classList.add('display-none');
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+            }
         }
     </script>
 
