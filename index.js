@@ -112,7 +112,7 @@ app.post('/addtocart', function(req, res){
         if (user != null){
             // if (user.sessionId === req.body.sessionId){
                 USER_CONTROLLER.updateQuantity(user, req.body.title, req.body.cost);
-                console.log(user.cart);
+                // console.log(user.cart);
                 res.status(201).send();
             // }
         }
@@ -125,7 +125,7 @@ app.post('/addtocart', function(req, res){
     }
 })
 
-app.get('/sizeofcart', function(req, res){
+app.get('/sizeOfCart', function(req, res){
     if(req.header('Content-type') === 'application/json'){
         //console.log(req.body);
         const user = USER_CONTROLLER.getUserFromUsername(req.header('Name'));
@@ -134,8 +134,11 @@ app.get('/sizeofcart', function(req, res){
             let cart_size = USER_CONTROLLER.sizeOfCart(user);
             // console.log(user.cart);
             // console.log(cart_size);
-            res.status(200).send(cart_size);
+            res.status(200).send(JSON.stringify(cart_size));
             // }
+        }
+        else{
+            res.status(401).send()
         }
     }
     else{
@@ -143,6 +146,25 @@ app.get('/sizeofcart', function(req, res){
     }
 })
 
+app.get('/userCart', function(req, res){
+    if(req.header('Content-type') === 'application/json'){
+        //console.log(req.body);
+        const user = USER_CONTROLLER.getUserFromUsername(req.header('Name'));
+        if (user != null){
+            // if (user.sessionId === req.body.sessionId){
+            let user_cart = {"cartItems": user.cart, "totalCost": USER_CONTROLLER.totalCostOfCart(user)};
+            // console.log(user_cart);
+            res.status(200).send(JSON.stringify(user_cart));
+            // }
+        }
+        else{
+            res.status(401).send()
+        }
+    }
+    else{
+        res.status(400).send()
+    }
+})
 
 //FOR AJAX
 app.get('/site/header', function(req, res){
