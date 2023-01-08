@@ -32,7 +32,7 @@
 
         <div id="main-container" class="flex-container justify-content-center">
             <div class="card">
-                <form action="/signup">
+                <form action="/create-account" method="POST">
                     <fieldset>
                         <label for="username">Username:</label>
                         <input id="username" name="username" type="text">
@@ -43,7 +43,12 @@
                         <input id="password" name="password" type="password">
                     </fieldset>
     
-                    <button type="submit">Submit</button>
+                    <fieldset>
+                        <label for="confirm-password">Confirm password:</label>
+                        <input id="confirm-password" name="confirm-password" type="password">
+                    </fieldset>
+    
+                    <button id="submit-btn" type="submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -52,45 +57,18 @@
     </script>
 
     <script>
-        // let template = document.getElementById("main-content").textContent;
-        // let compiledTemplate = Handlebars.compile(template);
-        // let content = compiledTemplate({});
-        // document.querySelector("body").innerHTML += content;
-        // let prom = new Promise((resolve, reject) => {fetchPartials()})
-
-        // prom
-        // .then(function(){
-        //     let template = document.getElementById("main-content").textContent;
-        //     let compiledTemplate = Handlebars.compile(template);
-        //     let content = compiledTemplate({});
-        //     document.querySelector("body").innerHTML += content;
-        // })
+        getPartials()
+        .then(function(){
+            let template = document.getElementById("main-content").textContent;
+            let compiledTemplate = Handlebars.compile(template);
+            let content = compiledTemplate({});
+            document.querySelector("body").innerHTML += content;
+        })
     </script>
 </head>
 
 <body>
-    <div id="main-container" class="flex-container justify-content-center">
-        <div class="card">
-            <form action="/create-account" method="POST">
-                <fieldset>
-                    <label for="username">Username:</label>
-                    <input id="username" name="username" type="text">
-                </fieldset>
-                
-                <fieldset>
-                    <label for="password">Password:</label>
-                    <input id="password" name="password" type="password">
-                </fieldset>
 
-                <fieldset>
-                    <label for="confirm-password">Confirm assword:</label>
-                    <input id="confirm-password" name="confirm-password" type="password">
-                </fieldset>
-
-                <button id="submit-btn" type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
 </body>
 
 <script>
