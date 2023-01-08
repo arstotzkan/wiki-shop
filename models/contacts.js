@@ -4,6 +4,9 @@ e.g. carts, users etc
 
 const USER_CONTROLLER = {
     userData : [{name: "Panos", password:"12345", cart: []}, {name:"Tasos", password: "67890", cart: []}],
+
+    currentlyLoggedIn: [],
+
     usernames : ["Panos", "Tasos"],
 
     addUser: function(newUsername, newPassword){
@@ -54,6 +57,18 @@ const USER_CONTROLLER = {
             total_cost += p.cost * p.quantity;
         }
         return total_cost
+    },
+
+    login: function(username){
+        let user = getUserFromUsername(username);
+        if (!user in this.currentlyLoggedIn)
+            this.currentlyLoggedIn.push(user);
+    },
+
+    logout: function(username){
+        let user = getUserFromUsername(username);
+        if (user in this.currentlyLoggedIn)
+            this.currentlyLoggedIn = this.currentlyLoggedIn.filter(account => account.name != user.name) //needs a lil bit of testing
     }
 }
 
