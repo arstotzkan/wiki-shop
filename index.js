@@ -77,6 +77,7 @@ app.post("/create-account", function(req, res) {
     }
     else{
        USER_CONTROLLER.addUser(username, pwd)
+       USER_CONTROLLER.login(username)
        res.redirect("/") //res.redirect("back")
     }
 })
@@ -98,6 +99,7 @@ app.post("/check-login", function(req, res) {
     let userDatum = USER_CONTROLLER.getUserFromUsername(username)
 
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
+        USER_CONTROLLER.login(username)
         res.redirect("/")
     }
     else{
