@@ -60,13 +60,13 @@ const USER_CONTROLLER = {
     },
 
     login: function(username){
-        let user = getUserFromUsername(username);
+        let user = this.getUserFromUsername(username);
         if (!user in this.currentlyLoggedIn)
             this.currentlyLoggedIn.push(user);
     },
 
     logout: function(username){
-        let user = getUserFromUsername(username);
+        let user = this.getUserFromUsername(username);
         if (user in this.currentlyLoggedIn)
             this.currentlyLoggedIn = this.currentlyLoggedIn.filter(account => account.name != user.name) //needs a lil bit of testing
     }
