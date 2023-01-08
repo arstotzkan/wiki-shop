@@ -49,7 +49,8 @@
     </script>
 
     <script>
-        fetch("https://wiki-shop.onrender.com/categories")
+        getPartials()
+        .then(() => fetch("https://wiki-shop.onrender.com/categories"))
         .then((data) => data.json())
         .then((categoryData) => {
                 let template = document.getElementById("categories-content").textContent;

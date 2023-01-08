@@ -46,42 +46,41 @@ function addcart(id) {
     }
 }
 
-window.onload = function() {
-    fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products")
-        .then((data) => data.json())
-        .then((productData) => {
-            let template = document.getElementById("products-content").textContent;
-            let compiledTemplate = Handlebars.compile(template);
-            let content = compiledTemplate({product: productData, cat_name: category_name});
-            document.querySelector("body").innerHTML += content;
-        })
-        .then(() =>{
-            fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/subcategories")
-                .then((data) => data.json())
-                .then((subCategoriesData) => {
-                    let template = document.getElementById("product-filter").textContent;
-                    let compiledTemplate = Handlebars.compile(template);
-                    let content = compiledTemplate({subCategory: subCategoriesData});
-                    document.querySelector("body").innerHTML += content;
-                })
-                .then(() => {
-                    // console.log(document.querySelectorAll("input[name='sub-category']"));
-                    document.querySelectorAll("input[name='sub-category']").forEach((filter) => {
-                        filter.addEventListener("click", function(event) {
-                            let item = event.target.value;
-                            // console.log(document.querySelectorAll('li.product'));
-                            document.querySelectorAll('li.product').forEach((elem) => {
-                                // console.log("item: " + item);
-                                // console.log("elem sub-cat: " + elem.dataset.subcategoryId);
-                                if(elem.dataset.subcategoryId === item || item === 'all'){
-                                    elem.classList.remove("display-none");
-                                }
-                                else{
-                                    elem.classList.add("display-none");
-                                }
-                            });
-                        });
-                    });
-                })
-        })
+window.onload = function() { //needs a lil bit of refactoring
+    getPartials()
+    .then( () => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products"))
+    .then((data) => data.json())
+    .then((productData) => {
+        let template = document.getElementById("products-content").textContent;
+        let compiledTemplate = Handlebars.compile(template);
+        let content = compiledTemplate({product: productData, cat_name: category_name});
+        document.querySelector("body").innerHTML += content;
+    })
+    .then(() => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/subcategories"))
+    .then((data) => data.json())
+    .then((subCategoriesData) => {
+        let template = document.getElementById("product-filter").textContent;
+        let compiledTemplate = Handlebars.compile(template);
+        let content = compiledTemplate({subCategory: subCategoriesData});
+        document.querySelector("body").innerHTML += content;
+    })
+    .then(() => {
+        // console.log(document.querySelectorAll("input[name='sub-category']"));
+        document.querySelectorAll("input[name='sub-category']").forEach((filter) => {
+            filter.addEventListener("click", function(event) {
+                let item = event.target.value;
+                // console.log(document.querySelectorAll('li.product'));
+                document.querySelectorAll('li.product').forEach((elem) => {
+                    // console.log("item: " + item);
+                    // console.log("elem sub-cat: " + elem.dataset.subcategoryId);
+                    if(elem.dataset.subcategoryId === item || item === 'all'){
+                        elem.classList.remove("display-none");
+                    }
+                    else{
+                        elem.classList.add("display-none");
+                    }
+                });
+            });
+        });
+    })
 }
