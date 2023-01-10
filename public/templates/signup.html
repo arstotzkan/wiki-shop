@@ -64,20 +64,19 @@
             let content = compiledTemplate({});
             document.querySelector("body").innerHTML += content;
         })
+        .then(function(){
+            document.getElementById("submit-btn").addEventListener("click", function(event){
+                if (document.getElementById("password").value === document.getElementById("confirm-password").value)
+                    document.querySelector("form").submit();
+                else    
+                    event.preventDefault();
+            })
+        }
+        )
     </script>
 </head>
 
 <body>
-
 </body>
-
-<script>
-    document.getElementById("submit-btn").addEventListener("click", function(event){
-        if (document.getElementById("password").value === document.getElementById("confirm-password").value)
-            form.submit();
-        else    
-            event.preventDefault();
-    })
-</script>
 
 </html>

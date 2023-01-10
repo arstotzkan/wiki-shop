@@ -59,17 +59,16 @@
             let content = compiledTemplate({});
             document.querySelector("body").innerHTML += content;
         })
+        .then(function(){
+            document.getElementById("login-btn").addEventListener("click", function(event){
+                document.querySelector("form").submit();
+            })
+        })
     </script>
 </head>
 
 <body>
 
 </body>
-
-<script>
-    document.getElementById("login-btn").addEventListener("click", function(event){
-        form.submit();
-    })
-</script>
 
 </html>
