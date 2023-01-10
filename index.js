@@ -1,13 +1,23 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const DATABASE_URL = require("./connectToDB.js")
 const contacts = require("./models/contacts.js");
+const LoggedInUser = require("./loggedInUser.js");
+
 const USER_CONTROLLER = contacts.USER_CONTROLLER;
 
 const app = express()
 const port = 8080
 
 app.listen(port)
+
+mongoose.connect(DATABASE_URL)
+.then(async function() {
+    let loggedIn = await LoggedInUser.find().deleteMany()
+    let now = await LoggedInUser.find();
+})
 
 /* 
     Serve static content from directory "public",
@@ -68,17 +78,19 @@ app.get("/signup" ,function(req,res){
     })
 })
 
-app.post("/create-account", function(req, res) {
+app.post("/create-account", async function(req, res) {
     let username = req.body.username;
     let pwd = req.body.password;
 
-    if (USER_CONTROLLER.getUserFromUsername(username)){
+    let usernameUnavailable = await USER_CONTROLLER.getUserFromUsername(username)
+
+    if (usernameUnavailable){
         res.redirect("/signup")
     }
     else{
-       USER_CONTROLLER.addUser(username, pwd)
-       USER_CONTROLLER.login(username)
-       res.redirect("/") //res.redirect("back")
+        USER_CONTROLLER.addUser(username, pwd)
+        USER_CONTROLLER.login(username)
+        res.redirect("/") //res.redirect("back")
     }
 })
 
@@ -92,12 +104,12 @@ app.get("/login" ,function(req,res){
     })
 })
 
-app.post("/check-login", function(req, res) {
+app.post("/check-login", async function(req, res) {
     let username = req.body.username;
     let pwd = req.body.password;
 
-    let userDatum = USER_CONTROLLER.getUserFromUsername(username)
-
+    let userDatum = await USER_CONTROLLER.getUserFromUsername(username)
+    
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
         USER_CONTROLLER.login(username)
         res.redirect("/")
@@ -109,14 +121,10 @@ app.post("/check-login", function(req, res) {
 
 app.post('/addtocart', function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        //console.log(req.body);
-        const user = USER_CONTROLLER.getUserFromUsername(req.body.name);
-        if (user != null){
-            // if (user.sessionId === req.body.sessionId){
-                USER_CONTROLLER.updateQuantity(user, req.body.title, req.body.cost);
-                // console.log(user.cart);
+        let username = req.body.name
+        if (username != null){
+                USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost);
                 res.status(201).send();
-            // }
         }
         else{
             res.status(401).send()
@@ -127,17 +135,12 @@ app.post('/addtocart', function(req, res){
     }
 })
 
-app.get('/sizeOfCart', function(req, res){
+app.get('/sizeOfCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        //console.log(req.body);
-        const user = USER_CONTROLLER.getUserFromUsername(req.header('Name'));
-        if (user != null){
-            // if (user.sessionId === req.body.sessionId){
-            let cart_size = USER_CONTROLLER.sizeOfCart(user);
-            // console.log(user.cart);
-            // console.log(cart_size);
+        const username = req.header('Name');
+        if (username != null){
+            let cart_size = await USER_CONTROLLER.sizeOfCart(username);
             res.status(200).send(JSON.stringify(cart_size));
-            // }
         }
         else{
             res.status(401).send()
@@ -148,14 +151,15 @@ app.get('/sizeOfCart', function(req, res){
     }
 })
 
-app.get('/userCart', function(req, res){
+app.get('/userCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        //console.log(req.body);
-        const user = USER_CONTROLLER.getUserFromUsername(req.header('Name'));
-        if (user != null){
+        const username = req.header('Name');
+        if (username != null){
             // if (user.sessionId === req.body.sessionId){
-            let user_cart = {"cartItems": user.cart, "totalCost": USER_CONTROLLER.totalCostOfCart(user)};
-            // console.log(user_cart);
+            let cart = await USER_CONTROLLER.getCart(username);
+            let cost = await USER_CONTROLLER.totalCostOfCart(username);
+
+            let user_cart = {"cartItems": cart, "totalCost": cost};
             res.status(200).send(JSON.stringify(user_cart));
             // }
         }

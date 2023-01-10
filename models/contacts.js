@@ -1,31 +1,37 @@
 /* JS files that defines modules for basic application entities,
 e.g. carts, users etc
 */
+const mongoose = require('mongoose');
+const DATABASE_URL = require("../connectToDB.js")
+const User = require("../user.js");
+const LoggedInUser = require("../loggedInUser.js");
 
 const USER_CONTROLLER = {
-    userData : [{name: "Panos", password:"12345", cart: []}, {name:"Tasos", password: "67890", cart: []}],
-
     currentlyLoggedIn: [],
 
-    usernames : ["Panos", "Tasos"],
-
-    addUser: function(newUsername, newPassword){
-        this.usernames.push(newUsername)
-        this.userData.push({name: newUsername, password: newPassword, cart: []})
+    addUser: async function(newUsername, newPassword){
+        await mongoose.connect(DATABASE_URL);
+        let user_id = await User.find()
+        user_id = user_id.length
+        let newUserObj = new User({user_id: user_id + 1, name: newUsername, password: newPassword, cart:[""]})
+        newUserObj.save()
     },
 
-    usernameTaken: function (newUsername){
-        return (newUsername in this.usernames)
+    usernameTaken: async function (newUsername){
+        await mongoose.connect(DATABASE_URL);
+        let results = await User.find({name: newUsername});
+        return results.length
     },
 
-    getUserFromUsername: function(username){
-        for (let user of this.userData)
-            if (user.name === username)
-                return user;
+    getUserFromUsername: async function(username){
+        await mongoose.connect(DATABASE_URL);
+        let result = await User.find({name: username});
+        return result[0];
     },
 
-    checkUserData: function(username, password){
-        let user = this.getUserFromUsername(username);
+    checkUserData: async function(username, password){
+        let user = await this.getUserFromUsername(username);
+        console.log("User: ", user)
         return (user && userDataIsCorrect(user, username, password))
     },
 
@@ -33,7 +39,16 @@ const USER_CONTROLLER = {
         return userObj.name === username && userObj.password === password
     },
 
-    updateQuantity: function(user, title, cost){
+    getCart: async function(username){
+        await mongoose.connect(DATABASE_URL);
+        let user = await this.getUserFromUsername(username);
+        return user.cart;
+    },
+
+    updateQuantity: async function(username, title, cost){
+       await mongoose.connect(DATABASE_URL);
+       let user = await this.getUserFromUsername(username);
+
         for (let i of user.cart){
             if(i.title === title){
                 i.quantity += 1;
@@ -43,15 +58,16 @@ const USER_CONTROLLER = {
         user.cart.push(new CartItem(title, cost, 1))
     },
 
-    sizeOfCart: function(user){
-        let size = 0;
-        for (let i of user.cart){
-            size += i.quantity
-        }
-        return {"size": size};
+    sizeOfCart: async function(username){
+        await mongoose.connect(DATABASE_URL);
+        let user = await this.getUserFromUsername(username);
+        return {"size": user.cart.length};
     },
 
-    totalCostOfCart: function (user){
+    totalCostOfCart: async function (username){
+        await mongoose.connect(DATABASE_URL);
+        let user = await this.getUserFromUsername(username);
+
         let total_cost = 0;
         for (let p of user.cart){
             total_cost += p.cost * p.quantity;
@@ -59,16 +75,22 @@ const USER_CONTROLLER = {
         return total_cost
     },
 
-    login: function(username){
-        let user = this.getUserFromUsername(username);
-        if (!user in this.currentlyLoggedIn)
-            this.currentlyLoggedIn.push(user);
+    login: async function(username){
+        await mongoose.connect(DATABASE_URL);
+        let loggedInUser = await LoggedInUser.find({"name": username})
+        if (!loggedInUser.length){
+            let user = await this.getUserFromUsername(username);
+            let newLoggedInUser = new LoggedInUser({user_id: user.user_id, name: user.name, password: user.password, cart:user.cart});
+            newLoggedInUser.save();
+        }
     },
 
-    logout: function(username){
-        let user = this.getUserFromUsername(username);
-        if (user in this.currentlyLoggedIn)
-            this.currentlyLoggedIn = this.currentlyLoggedIn.filter(account => account.name != user.name) //needs a lil bit of testing
+    logout: async function(username){
+        await mongoose.connect(DATABASE_URL);
+        let loggedInUser = await LoggedInUser.find({"name": username})
+        if (loggedInUser.length){
+            loggedInUser.remove();
+        }    
     }
 }
 
