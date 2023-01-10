@@ -68,6 +68,14 @@ app.get('/cart', function(req, res){
     })
 })
 
+/**
+ * app.get('/cart', function(req, res){
+        (loggedIn)
+        ? res.redirect("/account")
+        : res.redirect("/login")   
+    })
+ */
+
 app.get("/signup" ,function(req,res){
     var options = {
         root: path.join(__dirname, 'public', 'templates')
