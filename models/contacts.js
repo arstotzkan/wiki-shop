@@ -7,8 +7,6 @@ const User = require("../user.js");
 const LoggedInUser = require("../loggedInUser.js");
 
 const USER_CONTROLLER = {
-    currentlyLoggedIn: [],
-
     addUser: async function(newUsername, newPassword){
         await mongoose.connect(DATABASE_URL);
         let user_id = await User.find()
