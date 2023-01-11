@@ -34,7 +34,7 @@ app.get('/', function(req, res){
     }
 
     res.sendFile('index.html', options, function(err){
-        console.log(err)
+        //console.log(err)
     })
 })
 
@@ -46,7 +46,7 @@ app.get('/categories', function(req, res){
 
     res.sendFile('categories.html', options, function(err){
         
-        console.log(err)
+        //console.log(err)
     })
 })
 
@@ -58,7 +58,7 @@ app.get('/cart', function(req, res){
     }
 
     res.sendFile('cart.html', options, function(err){
-        console.log(err)
+        //console.log(err)
     })
 })
 
@@ -76,7 +76,7 @@ app.get("/signup" ,function(req,res){
     }
 
     res.sendFile('signup.html', options, function(err){
-        console.log(err);
+        //console.log(err);
     })
 })
 
@@ -102,13 +102,15 @@ app.get("/login" ,function(req,res){
     }
 
     res.sendFile('login.html', options, function(err){
-        console.log(err);
+        //console.log(err);
     })
 })
 
 app.post("/check-login", async function(req, res) {
     let username = req.body.username;
     let pwd = req.body.password;
+
+    console.log(username, pwd)
 
     let userDatum = await USER_CONTROLLER.getUserFromUsername(username)
     
@@ -117,6 +119,7 @@ app.post("/check-login", async function(req, res) {
         res.redirect("/")
     }
     else{
+        console.log(userDatum, "dw")
        res.redirect("/login")//res.redirect("back")
     }
 })
@@ -160,7 +163,7 @@ app.get('/userCart', async function(req, res){
             // if (user.sessionId === req.body.sessionId){
             let cart = await USER_CONTROLLER.getCart(username);
             let cost = await USER_CONTROLLER.totalCostOfCart(username);
-            // console.log(user_cart);
+            // //console.log(user_cart);
             let user_cart = {"cartItems": cart, "totalCost": cost};
             res.status(200).send(JSON.stringify(user_cart));
             // }
@@ -182,7 +185,7 @@ app.get('/site/header', function(req, res){
     }
 
     res.sendFile('header.html', options, function(err){
-        console.log(err)
+        //console.log(err)
     })
 })
 
@@ -193,7 +196,7 @@ app.get('/site/sidebar', function(req, res){
     }
 
     res.sendFile('sidebar.html', options, function(err){
-        console.log(err)
+        //console.log(err)
     })
 })
 
@@ -204,6 +207,6 @@ app.get('/site/footer', function(req, res){
     }
 
     res.sendFile('footer.html', options, function(err){
-        console.log(err);
+        //console.log(err);
     })
 })

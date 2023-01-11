@@ -13,14 +13,14 @@ window.onload = function () {
             return response.json()
         }
         else if(response.status === 401){
-            console.log("You have to be logged in to add products in the cart.");
+            //console.log("You have to be logged in to add products in the cart.");
         }
         else if(response.status === 400){
-            console.log("Something went wrong.");
+            //console.log("Something went wrong.");
         }
     })
     .then((cart) => {
-        // console.log(cart);
+        // //console.log(cart);
         let template = document.getElementById("cart-content").textContent;
         let compiledTemplate = Handlebars.compile(template);
         let content = compiledTemplate({
@@ -30,6 +30,6 @@ window.onload = function () {
         document.querySelector("body").innerHTML += content;
     })
     .catch(error => {
-        console.log(error);
+        //console.log(error);
     })
 }

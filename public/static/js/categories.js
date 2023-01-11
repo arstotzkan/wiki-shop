@@ -4,7 +4,7 @@ const user_name = new URLSearchParams(window.location.search).get('userName');
 const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
 let cart_size = 0;
 
-// console.log(category_id, category_name)
+// //console.log(category_id, category_name)
 function addcart(id) {
     if(false){ // user_name == null || user_session_id == null
         let popup = document.getElementById("logged_in_popup");
@@ -26,7 +26,7 @@ function addcart(id) {
         fetch("addtocart", init)
             .then(response => {
                 if (response.status === 201){
-                    // console.log("Product: " + prodTitle + " added to cart.");
+                    // //console.log("Product: " + prodTitle + " added to cart.");
                     document.getElementById("cart-size").classList.remove('display-none');
                     cart_size += 1;
                     document.getElementById("cart-size").textContent = cart_size;
@@ -37,11 +37,11 @@ function addcart(id) {
                     popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
                 }
                 else if (response.status === 400){
-                    console.log("Something went wrong.");
+                    //console.log("Something went wrong.");
                 }
             })
             .catch(error => {
-                console.log(error);
+                //console.log(error);
             })
     }
 }
@@ -65,14 +65,14 @@ window.onload = function() { //needs a lil bit of refactoring
         document.querySelector("body").innerHTML += content;
     })
     .then(() => {
-        // console.log(document.querySelectorAll("input[name='sub-category']"));
+        // //console.log(document.querySelectorAll("input[name='sub-category']"));
         document.querySelectorAll("input[name='sub-category']").forEach((filter) => {
             filter.addEventListener("click", function(event) {
                 let item = event.target.value;
-                // console.log(document.querySelectorAll('li.product'));
+                // //console.log(document.querySelectorAll('li.product'));
                 document.querySelectorAll('li.product').forEach((elem) => {
-                    // console.log("item: " + item);
-                    // console.log("elem sub-cat: " + elem.dataset.subcategoryId);
+                    // //console.log("item: " + item);
+                    // //console.log("elem sub-cat: " + elem.dataset.subcategoryId);
                     if(elem.dataset.subcategoryId === item || item === 'all'){
                         elem.classList.remove("display-none");
                     }
