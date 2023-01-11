@@ -4,7 +4,6 @@ e.g. carts, users etc
 const mongoose = require('mongoose');
 const DATABASE_URL = require("../connectToDB.js")
 const User = require("../user.js");
-const LoggedInUser = require("../loggedInUser.js");
 
 const USER_CONTROLLER = {
     addUser: async function(newUsername, newPassword){
@@ -84,21 +83,10 @@ const USER_CONTROLLER = {
     },
 
     login: async function(username){
-        await mongoose.connect(DATABASE_URL);
-        let loggedInUser = await LoggedInUser.find({"name": username})
-        if (!loggedInUser.length){
-            let user = await this.getUserFromUsername(username);
-            let newLoggedInUser = new LoggedInUser({user_id: user.user_id, name: user.name, password: user.password, cart:user.cart});
-            newLoggedInUser.save();
-        }
     },
 
     logout: async function(username){
-        await mongoose.connect(DATABASE_URL);
-        let loggedInUser = await LoggedInUser.find({"name": username})
-        if (loggedInUser.length){
-            loggedInUser.remove();
-        }    
+
     }
 }
 

@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const DATABASE_URL = require("./connectToDB.js")
 const contacts = require("./models/contacts.js");
-const LoggedInUser = require("./loggedInUser.js");
 
 const USER_CONTROLLER = contacts.USER_CONTROLLER;
 
@@ -13,11 +12,6 @@ const port = 8080
 
 app.listen(port)
 
-mongoose.connect(DATABASE_URL)
-.then(async function() {
-    let loggedIn = await LoggedInUser.find().deleteMany()
-    let now = await LoggedInUser.find();
-})
 
 /* 
     Serve static content from directory "public",
