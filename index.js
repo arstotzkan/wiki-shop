@@ -132,7 +132,7 @@ app.post('/addtocart', function(req, res){
         let username = req.body.name
         if (username != null){
                 USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost);
-                res.status(201).send();
+                res.status(204).send();
         }
         else{
             res.status(401).send()
@@ -166,7 +166,7 @@ app.get('/userCart', async function(req, res){
             // if (user.sessionId === req.body.sessionId){
             let cart = await USER_CONTROLLER.getCart(username);
             let cost = await USER_CONTROLLER.totalCostOfCart(username);
-
+            // console.log(user_cart);
             let user_cart = {"cartItems": cart, "totalCost": cost};
             res.status(200).send(JSON.stringify(user_cart));
             // }

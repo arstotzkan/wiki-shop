@@ -198,7 +198,7 @@ a, a:hover, a:visited, a:active {
 }
 
 #filter {
-    width: max(20%, auto);
+    width: 21%;
     margin: 0;
     position: fixed;
     top: 8rem;
@@ -208,6 +208,12 @@ a, a:hover, a:visited, a:active {
 #filter label {
     display: inline-block;
     width: 8rem;
+}
+
+#filter form {
+    text-align: center;
+    margin-left: 0.3rem;
+    padding-left: 0;
 }
 
 form {

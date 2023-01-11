@@ -11,7 +11,7 @@ const USER_CONTROLLER = {
         await mongoose.connect(DATABASE_URL);
         let user_id = await User.find()
         user_id = user_id.length
-        let newUserObj = new User({user_id: user_id + 1, name: newUsername, password: newPassword, cart:[""]})
+        let newUserObj = new User({user_id: user_id + 1, name: newUsername, password: newPassword, cart:[]})
         newUserObj.save()
     },
 
@@ -44,30 +44,40 @@ const USER_CONTROLLER = {
     },
 
     updateQuantity: async function(username, title, cost){
-       await mongoose.connect(DATABASE_URL);
-       let user = await this.getUserFromUsername(username);
-
-        for (let i of user.cart){
+        await mongoose.connect(DATABASE_URL);
+        let user_cart = await this.getCart(username);
+        console.log(user_cart);
+        for (let i of user_cart){
             if(i.title === title){
                 i.quantity += 1;
+                let res = await User.updateOne({ name: username}, {cart: user_cart});
+                console.log(res)
                 return
             }
         }
-        user.cart.push(new CartItem(title, cost, 1))
+        user_cart.push(new CartItem(title, cost, 1));
+        let res = await User.updateOne({ name: username}, {cart: user_cart});
+        // console.log(res);
     },
 
     sizeOfCart: async function(username){
         await mongoose.connect(DATABASE_URL);
-        let user = await this.getUserFromUsername(username);
-        return {"size": user.cart.length};
+        let user_cart = await this.getCart(username);
+        console.log(user_cart);
+        let size = 0;
+        for (let i of user_cart){
+            size += i.quantity
+            console.log(size)
+        }
+        return {"size": size};
     },
 
     totalCostOfCart: async function (username){
         await mongoose.connect(DATABASE_URL);
-        let user = await this.getUserFromUsername(username);
+        let user_cart = await this.getCart(username);
 
         let total_cost = 0;
-        for (let p of user.cart){
+        for (let p of user_cart){
             total_cost += p.cost * p.quantity;
         }
         return total_cost
