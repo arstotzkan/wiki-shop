@@ -3,7 +3,7 @@ e.g. carts, users etc
 */
 const mongoose = require('mongoose');
 const DATABASE_URL = require("../connectToDB.js")
-const User = require("../user.js");
+const User = require("./user.js");
 
 const USER_CONTROLLER = {
     addUser: async function(newUsername, newPassword){
@@ -28,7 +28,7 @@ const USER_CONTROLLER = {
 
     checkUserData: async function(username, password){
         let user = await this.getUserFromUsername(username);
-        console.log("User: ", user)
+        //console.log("User: ", user)
         return (user && userDataIsCorrect(user, username, password))
     },
 
@@ -45,28 +45,28 @@ const USER_CONTROLLER = {
     updateQuantity: async function(username, title, cost){
         await mongoose.connect(DATABASE_URL);
         let user_cart = await this.getCart(username);
-        console.log(user_cart);
+        //console.log(user_cart);
         for (let i of user_cart){
             if(i.title === title){
                 i.quantity += 1;
                 let res = await User.updateOne({ name: username}, {cart: user_cart});
-                console.log(res)
+                //console.log(res)
                 return
             }
         }
         user_cart.push(new CartItem(title, cost, 1));
         let res = await User.updateOne({ name: username}, {cart: user_cart});
-        // console.log(res);
+        // //console.log(res);
     },
 
     sizeOfCart: async function(username){
         await mongoose.connect(DATABASE_URL);
         let user_cart = await this.getCart(username);
-        console.log(user_cart);
+        //console.log(user_cart);
         let size = 0;
         for (let i of user_cart){
             size += i.quantity
-            console.log(size)
+            //console.log(size)
         }
         return {"size": size};
     },
