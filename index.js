@@ -63,20 +63,24 @@ app.get('/cart', function(req, res){
     })
 })
 
-/**
- * app.get('/cart', function(req, res){
-        (loggedIn)
-        ? res.redirect("/account")
-        : res.redirect("/login")   
+
+app.get('/exit', function(req, res){
+
+    var options = {
+        root: path.join(__dirname, 'public', 'templates')
+    }
+
+    res.sendFile('exit.html', options, function(err){
+        //console.log(err)
     })
- */
+})
 
 app.get("/account", function(req, res){
     let session_id = req.query.session_id;
     console.log(session_id);
 
     let redirectURL = (session_id)
-    ? "/" //TEMP
+    ? "/exit" //TEMP
     : "/login"
 
     res.redirect(redirectURL)
