@@ -21,3 +21,16 @@ function addlinkParams(){
         :  link.href += `&username=${username}&session_id=${session_id}`
     }
 }
+
+function setAccountIcon(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('username');
+
+    document.getElementById("account-icon").textContent = username
+    ? "logout"
+    : "login"
+
+    document.getElementById("account-icon").title = username
+    ? "Log out"
+    : "Log in"
+}
