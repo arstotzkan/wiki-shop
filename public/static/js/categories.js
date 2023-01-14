@@ -48,8 +48,11 @@ function addcart(id) {
 
 window.onload = function() { //needs a lil bit of refactoring
     addlinkParams()
+    setAccountIcon()
 
     getPartials()
+    .then(()=> setAccountIcon())
+    .then(() => addlinkParams())
     .then( () => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products"))
     .then((data) => data.json())
     .then((productData) => {

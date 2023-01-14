@@ -1,6 +1,4 @@
 window.onload = function () {
-    addlinkParams()
-
     const user_name = new URLSearchParams(window.location.search).get('userName');
     const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
     let myHeaders = new Headers();
@@ -8,7 +6,10 @@ window.onload = function () {
     myHeaders.append('Name', 'Tasos'); // user_name
     myHeaders.append('Session-Id', 'lvckjlvkj'); // user_session_id
     let init = {method: "GET", headers: myHeaders}
+
     getPartials()
+    .then(()=> setAccountIcon())
+    .then(() => addlinkParams())
     .then( ()=> fetch("userCart", init))
     .then((response) => {
         if(response.status === 200){
