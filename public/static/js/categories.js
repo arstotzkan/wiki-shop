@@ -47,8 +47,6 @@ function addcart(id) {
 }
 
 window.onload = function() { //needs a lil bit of refactoring
-    addlinkParams()
-    setAccountIcon()
 
     getPartials()
     .then(()=> setAccountIcon())
