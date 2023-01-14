@@ -59,8 +59,9 @@ app.get('/cart', function(req, res){
     }
 
     let session_id = req.query.session_id;
+    let username = req.query.username;
     
-    (session_id)
+    (session_id && username)
     ? res.sendFile('cart.html', options, function(err){
         //console.log(err)
     })
@@ -81,7 +82,9 @@ app.get('/exit', function(req, res){
 
 app.get("/account", function(req, res){
     let session_id = req.query.session_id;
-    let redirectURL = (session_id)
+    let username = req.query.username;
+
+    let redirectURL = (session_id && username)
     ? "/exit" //TEMP
     : "/login"
 
