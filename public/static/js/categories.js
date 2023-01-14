@@ -4,15 +4,17 @@ const category_name = new URLSearchParams(window.location.search).get('categoryN
 let cart_size = 0;
 
 // //console.log(category_id, category_name)
-function addcart(id) {
-    if(false){ // user_name == null || user_session_id == null
+function addcart(id) {       
+    const username = new URLSearchParams(window.location.search).get('username');
+    const user_session_id = new URLSearchParams(window.location.search).get('session_id');
+    
+    if(username == null || user_session_id == null){
         let popup = document.getElementById("logged_in_popup");
         popup.classList.remove("display-none");
         popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
     }
     else{
-        const username = new URLSearchParams(window.location.search).get('username');
-        const user_session_id = new URLSearchParams(window.location.search).get('session_id');
+
 
         let elem = document.getElementById(id);
         let prodTitle = elem.dataset.title.toString()
