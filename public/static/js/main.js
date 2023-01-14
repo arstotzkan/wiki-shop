@@ -1,11 +1,14 @@
 window.addEventListener('load', () => {
-    if(true){ // user_name != nul&& user_session_id != null){
+    const username = new URLSearchParams(window.location.search).get('username');
+    const user_session_id = new URLSearchParams(window.location.search).get('session_id');
+
+    if(user_name != nul&& user_session_id != null){
         let myHeaders = new Headers();
         myHeaders.append('Content-type', 'application/json');
-        myHeaders.append('Name', 'Tasos');
-        myHeaders.append('Session-Id', 'lvckjlvkj');
+        myHeaders.append('username', username);
+        myHeaders.append('session_id', user_session_id);
         let init = {method: "GET", headers: myHeaders}
-        fetch("sizeOfCart",init)
+        fetch("/sizeOfCart",init)
             .then((data) => {
                 if(data.status === 200){
                     return data.json()

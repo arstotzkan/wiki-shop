@@ -1,10 +1,11 @@
 window.onload = function () {
-    const user_name = new URLSearchParams(window.location.search).get('userName');
-    const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
+    const username = new URLSearchParams(window.location.search).get('username');
+    const sessionId = new URLSearchParams(window.location.search).get('session_id');
+    
     let myHeaders = new Headers();
     myHeaders.append('Content-type', 'application/json');
-    myHeaders.append('Name', 'Tasos'); // user_name
-    myHeaders.append('Session-Id', 'lvckjlvkj'); // user_session_id
+    myHeaders.append('username', username); // user_name
+    myHeaders.append('session_id', sessionId); // user_session_id
     let init = {method: "GET", headers: myHeaders}
 
     getPartials()

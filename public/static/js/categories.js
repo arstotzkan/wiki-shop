@@ -1,7 +1,6 @@
 const category_id = new URLSearchParams(window.location.search).get('categoryId')
 const category_name = new URLSearchParams(window.location.search).get('categoryName');
-const user_name = new URLSearchParams(window.location.search).get('userName');
-const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
+
 let cart_size = 0;
 
 // //console.log(category_id, category_name)
@@ -12,6 +11,9 @@ function addcart(id) {
         popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
     }
     else{
+        const username = new URLSearchParams(window.location.search).get('username');
+        const user_session_id = new URLSearchParams(window.location.search).get('session_id');
+
         let elem = document.getElementById(id);
         let prodTitle = elem.dataset.title.toString()
         let prodCost = elem.dataset.cost.toString()
@@ -20,12 +22,12 @@ function addcart(id) {
         let init = {
             method: "POST",
             headers: myHeaders,
-            body: JSON.stringify({name: "Tasos", sessionId: user_session_id, title: prodTitle, cost: prodCost})
+            body: JSON.stringify({username: username, session_id: user_session_id, title: prodTitle, cost: prodCost})
             // user_name
         }
-        fetch("addtocart", init)
+        fetch("/addtocart", init)
             .then(response => {
-                if (response.status === 201){
+                if (response.status === 204){
                     // //console.log("Product: " + prodTitle + " added to cart.");
                     document.getElementById("cart-size").classList.remove('display-none');
                     cart_size += 1;
@@ -37,17 +39,16 @@ function addcart(id) {
                     popup.addEventListener("animationend", () => {popup.classList.add("display-none");}, false);
                 }
                 else if (response.status === 400){
-                    //console.log("Something went wrong.");
+                    console.log("Something went wrong.");
                 }
             })
             .catch(error => {
-                //console.log(error);
+                console.log(error);
             })
     }
 }
 
 window.onload = function() { //needs a lil bit of refactoring
-
     getPartials()
     .then( () => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products"))
     .then((data) => data.json())
