@@ -58,9 +58,13 @@ app.get('/cart', function(req, res){
         root: path.join(__dirname, 'public', 'templates')
     }
 
-    res.sendFile('cart.html', options, function(err){
+    let session_id = req.query.session_id;
+    
+    (session_id)
+    ? res.sendFile('cart.html', options, function(err){
         //console.log(err)
     })
+    : res.redirect("/login")
 })
 
 
@@ -77,8 +81,6 @@ app.get('/exit', function(req, res){
 
 app.get("/account", function(req, res){
     let session_id = req.query.session_id;
-    console.log(session_id);
-
     let redirectURL = (session_id)
     ? "/exit" //TEMP
     : "/login"
@@ -144,7 +146,7 @@ app.post("/check-login", async function(req, res) {
 
 app.post('/addtocart', function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        let username = req.body.name
+        let username = req.body.username
         if (username != null){
                 USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost);
                 res.status(204).send();
@@ -160,8 +162,8 @@ app.post('/addtocart', function(req, res){
 
 app.get('/sizeOfCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        const username = req.header('Name');
-        if (username != null){
+        const username = req.header('username');
+        if (username){
             let cart_size = await USER_CONTROLLER.sizeOfCart(username);
             res.status(200).send(JSON.stringify(cart_size));
         }
@@ -176,7 +178,7 @@ app.get('/sizeOfCart', async function(req, res){
 
 app.get('/userCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        const username = req.header('Name');
+        const username = req.header('username');
         if (username != null){
             // if (user.sessionId === req.body.sessionId){
             let cart = await USER_CONTROLLER.getCart(username);
