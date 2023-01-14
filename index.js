@@ -131,9 +131,6 @@ app.get("/login" ,function(req,res){
 app.post("/check-login", async function(req, res) {
     let username = req.body.username;
     let pwd = req.body.password;
-
-    console.log(username, pwd)
-
     let userDatum = await USER_CONTROLLER.getUserFromUsername(username)
     
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
@@ -142,7 +139,6 @@ app.post("/check-login", async function(req, res) {
         res.redirect(`/?username=${username}&session_id=${session_id}`)
     }
     else{
-        console.log(userDatum, "dw")
        res.redirect("/login")//res.redirect("back")
     }
 })
