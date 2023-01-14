@@ -30,7 +30,7 @@ function setAccountIcon(){
     ? "logout"
     : "login"
 
-    document.getElementById("account-icon").title = username
+    document.getElementById("account-link").title = username
     ? "Log out"
     : "Log in"
 }
