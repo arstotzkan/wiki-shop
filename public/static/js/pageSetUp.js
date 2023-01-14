@@ -15,10 +15,10 @@ function addlinkParams(){
     const session_id = urlParams.get('session_id');
 
     for (let link of document.querySelectorAll("a:not(.outside-link)")){
-
-        ([...new URLSearchParams(link.href)].length === 1) //if only param is link itself
-        ? link.href += `?username=${username}&session_id=${session_id}`
-        :  link.href += `&username=${username}&session_id=${session_id}`
+        if (username && session_id)
+            ([...new URLSearchParams(link.href)].length === 1) //if only param is link itself
+            ? link.href += `?username=${username}&session_id=${session_id}`
+            :  link.href += `&username=${username}&session_id=${session_id}`
     }
 }
 
