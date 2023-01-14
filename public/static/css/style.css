@@ -366,8 +366,11 @@ input[type=number] {
     background-color: #f8d7da;
     border: 1px solid #f5c2c7;
     border-radius: .25rem;
-    margin: 1rem 0;
-    padding: 0 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 /* // Medium devices (tablets, 768px and down) */
