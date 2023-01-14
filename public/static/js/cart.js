@@ -8,8 +8,6 @@ window.onload = function () {
     let init = {method: "GET", headers: myHeaders}
 
     getPartials()
-    .then(()=> setAccountIcon())
-    .then(() => addlinkParams())
     .then( ()=> fetch("userCart", init))
     .then((response) => {
         if(response.status === 200){
@@ -31,6 +29,9 @@ window.onload = function () {
             total: cart.totalCost
         });
         document.querySelector("body").innerHTML += content;
+
+        setAccountIcon()
+        addlinkParams()
     })
     .catch(error => {
         //console.log(error);
