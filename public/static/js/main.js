@@ -2,7 +2,7 @@ window.addEventListener('load', () => {
     const username = new URLSearchParams(window.location.search).get('username');
     const user_session_id = new URLSearchParams(window.location.search).get('session_id');
 
-    if(user_name != nul&& user_session_id != null){
+    if(user_name != null && user_session_id != null){
         let myHeaders = new Headers();
         myHeaders.append('Content-type', 'application/json');
         myHeaders.append('username', username);
