@@ -47,8 +47,8 @@ ul{
 
 #logged_in_popup {
     position: fixed;
-    top: 5rem;
-    right: 5rem;
+    top: 3rem;
+    right: 3rem;
     border: 2px solid #ce3838;
     background-color: #d58787;
     padding: 0.5rem;
@@ -56,8 +56,8 @@ ul{
     border-radius: 1rem;
     color: #fff;
     /*font-size: 1rem;*/
-    animation: fadeOut 2s;
-    -webkit-animation: fadeOut 2s;
+    animation: fadeOut 1.75s;
+    -webkit-animation: fadeOut 1.75s;
 }
 
 @keyframes fadeOut {
