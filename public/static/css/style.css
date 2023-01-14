@@ -361,6 +361,15 @@ input[type=number] {
     font-size: 0.8rem;
 }
 
+#error-area{
+    color: #842029;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    border-radius: .25rem;
+    margin: 1rem 0;
+    padding: 0 0.5rem;
+}
+
 /* // Medium devices (tablets, 768px and down) */
 @media (max-width: 768px) {
 
