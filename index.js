@@ -108,7 +108,7 @@ app.post("/create-account", async function(req, res) {
     let usernameUnavailable = await USER_CONTROLLER.getUserFromUsername(username)
 
     if (usernameUnavailable){
-        res.redirect("/signup")
+        res.redirect("/signup?failed=true")
     }
     else{
         USER_CONTROLLER.addUser(username, pwd)
@@ -139,7 +139,7 @@ app.post("/check-login", async function(req, res) {
         res.redirect(`/?username=${username}&session_id=${session_id}`)
     }
     else{
-       res.redirect("/login")//res.redirect("back")
+       res.redirect("/login?failed=true")//res.redirect("back")
     }
 })
 

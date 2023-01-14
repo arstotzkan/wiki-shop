@@ -46,6 +46,11 @@
                     <button id="login-btn" type="submit">Log in</button>
 
                     <small>Don't have an account? <a href="/signup">Sign up for free</a></small>
+
+                    <div id="error-area" class="display-none">
+                        <strong id="error"></strong>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -61,12 +66,19 @@
             let content = compiledTemplate({});
             document.querySelector("body").innerHTML += content;
             setAccountIcon()
+
+            const failed = new URLSearchParams(window.location.search).get('failed');
+            if (failed){
+                document.getElementById("error-area").classList.remove("display-none")
+                document.getElementById("error").textContent = "Invalid Credentials" //must add alert CSS
+            }
         })
         .then(function(){
             document.getElementById("login-btn").addEventListener("click", function(event){
                 document.querySelector("form").submit();
             })
         })
+
     </script>
 </head>
 

@@ -52,7 +52,7 @@
 
                     <small>Already have an account? <a href="/login">Log in</a></small>
 
-                    <div id="error-area" class="d-none">
+                    <div id="error-area" class="display-none">
                         <strong id="error"></strong>
                     </div>
                 </form>
@@ -70,6 +70,13 @@
             let content = compiledTemplate({});
             document.querySelector("body").innerHTML += content;
             setAccountIcon()
+
+            const failed = new URLSearchParams(window.location.search).get('failed');
+            if (failed){
+                document.getElementById("error-area").classList.remove("display-none")
+                document.getElementById("error").textContent = "Username Not Available" //must add alert CSS
+            }
+
         })
         .then(function(){
             document.getElementById("submit-btn").addEventListener("click", function(event){
@@ -77,13 +84,14 @@
                     document.querySelector("form").submit();
                 else{
                     event.preventDefault();
-                    document.getElementById("error-area").classList.remove("d-none")
+                    document.getElementById("error-area").classList.remove("display-none")
                     document.getElementById("error").textContent = "Passwords do not match" //must add alert CSS
                 }
                     
             })
         }
         )
+
     </script>
 </head>
 
