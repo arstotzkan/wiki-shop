@@ -49,8 +49,6 @@ function addcart(id) {
 window.onload = function() { //needs a lil bit of refactoring
 
     getPartials()
-    .then(()=> setAccountIcon())
-    .then(() => addlinkParams())
     .then( () => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products"))
     .then((data) => data.json())
     .then((productData) => {
@@ -58,6 +56,8 @@ window.onload = function() { //needs a lil bit of refactoring
         let compiledTemplate = Handlebars.compile(template);
         let content = compiledTemplate({product: productData, cat_name: category_name});
         document.querySelector("body").innerHTML += content;
+        setAccountIcon();
+        addlinkParams()
     })
     .then(() => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/subcategories"))
     .then((data) => data.json())
