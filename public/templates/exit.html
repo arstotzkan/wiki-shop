@@ -45,6 +45,7 @@
                 let compiledTemplate = Handlebars.compile(template);
                 let content = compiledTemplate({});
                 document.querySelector("body").innerHTML += content;
+                setAccountIcon()
             }
         )
         .then(function(){

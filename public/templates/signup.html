@@ -69,6 +69,7 @@
             let compiledTemplate = Handlebars.compile(template);
             let content = compiledTemplate({});
             document.querySelector("body").innerHTML += content;
+            setAccountIcon()
         })
         .then(function(){
             document.getElementById("submit-btn").addEventListener("click", function(event){
