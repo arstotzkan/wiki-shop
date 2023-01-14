@@ -47,6 +47,8 @@ function addcart(id) {
 }
 
 window.onload = function() { //needs a lil bit of refactoring
+    addlinkParams()
+
     getPartials()
     .then( () => fetch("https://wiki-shop.onrender.com/categories/" + category_id + "/products"))
     .then((data) => data.json())
@@ -84,3 +86,4 @@ window.onload = function() { //needs a lil bit of refactoring
         });
     })
 }
+

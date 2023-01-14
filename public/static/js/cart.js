@@ -1,4 +1,6 @@
 window.onload = function () {
+    addlinkParams()
+
     const user_name = new URLSearchParams(window.location.search).get('userName');
     const user_session_id = new URLSearchParams(window.location.search).get('userSessionId');
     let myHeaders = new Headers();
