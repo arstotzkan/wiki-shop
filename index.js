@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const DATABASE_URL = require("./connectToDB.js")
 const contacts = require("./models/contacts.js");
+const uuid = require('uuid');
 
 const USER_CONTROLLER = contacts.USER_CONTROLLER;
 
@@ -70,6 +71,17 @@ app.get('/cart', function(req, res){
     })
  */
 
+app.get("/account", function(req, res){
+    let session_id = req.query.session_id;
+    console.log(session_id);
+
+    let redirectURL = (session_id)
+    ? "/" //TEMP
+    : "/login"
+
+    res.redirect(redirectURL)
+})
+
 app.get("/signup" ,function(req,res){
     var options = {
         root: path.join(__dirname, 'public', 'templates')
@@ -92,7 +104,8 @@ app.post("/create-account", async function(req, res) {
     else{
         USER_CONTROLLER.addUser(username, pwd)
         USER_CONTROLLER.login(username)
-        res.redirect("/") //res.redirect("back")
+        let session_id = uuid.v4();
+        res.redirect(`/?username=${username}&session_id=${session_id}`) //res.redirect("back")
     }
 })
 
@@ -116,7 +129,8 @@ app.post("/check-login", async function(req, res) {
     
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
         USER_CONTROLLER.login(username)
-        res.redirect("/")
+        let session_id = uuid.v4();
+        res.redirect(`/?username=${username}&session_id=${session_id}`)
     }
     else{
         console.log(userDatum, "dw")
