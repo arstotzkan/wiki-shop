@@ -1,3 +1,7 @@
+Handlebars.registerHelper('money', function(price) {
+    return price.toFixed(2);
+});
+
 window.addEventListener('load', () => {
     const username = new URLSearchParams(window.location.search).get('username');
     const user_session_id = new URLSearchParams(window.location.search).get('session_id');

@@ -159,6 +159,23 @@ app.post('/addtocart', function(req, res){
     }
 })
 
+app.post('/updateCart', async function(req, res){
+    if(req.header('Content-type') === 'application/json'){
+        let username = req.body.username
+        if (username != null){
+            USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost, req.body.quantity);
+            let cost = await USER_CONTROLLER.totalCostOfCart(username);
+            res.status(204).send(JSON.stringify(cost));
+        }
+        else{
+            res.status(401).send()
+        }
+    }
+    else{
+        res.status(400).send()
+    }
+})
+
 app.get('/sizeOfCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
         const username = req.header('username');

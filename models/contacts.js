@@ -42,13 +42,24 @@ const USER_CONTROLLER = {
         return user.cart;
     },
 
-    updateQuantity: async function(username, title, cost){
+    updateQuantity: async function(username, title, cost, quan=-1){
         await mongoose.connect(DATABASE_URL);
         let user_cart = await this.getCart(username);
-        //console.log(user_cart);
         for (let i of user_cart){
             if(i.title === title){
-                i.quantity += 1;
+                if(quan !== -1){
+                    if (quan === 0){
+                        user_cart.filter(function(value){
+                            return value !== i;
+                        });
+                    }
+                    else{
+                        i.quantity = quan;
+                    }
+                }
+                else{
+                    i.quantity += 1;
+                }
                 let res = await User.updateOne({ name: username}, {cart: user_cart});
                 //console.log(res)
                 return

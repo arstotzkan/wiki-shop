@@ -24,3 +24,8 @@ table th {
 #total-cost{
     padding-bottom: 1rem;
 }
+
+input[type='number'] {
+    width: 2rem;
+    text-align: center;
+}

@@ -46,10 +46,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each array}}
+                        {{#each array as |this cartIndex|}}
                             <tr>
                                 {{#each this}}
-                                    <td>{{this}}</td>
+                                    {{#if @last}}
+                                        <td>
+                                            <button onclick="updateQuantity({{cartIndex}}, '-')">-</button>
+                                            <input type="number" id="product{{cartIndex}}" name="product_quantity" min="0" max="99" value="{{this}}">
+                                            <button onclick="updateQuantity({{cartIndex}}, '+')">+</button>
+                                        </td>
+                                    {{else if @first}}
+                                        <td class="title">{{this}}</td>
+                                    {{else}}
+                                        <td>{{this}} $</td>
+                                    {{/if}}
                                 {{/each}}
                             </tr>
                         {{/each}}
@@ -57,7 +67,7 @@
                 </table>
                 
                 <h3 id="total-cost">
-                   Total cost: {{total}}
+                   Total cost: {{money total}} $
                 </h3>
             </div>
         </div>
