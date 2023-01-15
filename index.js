@@ -86,8 +86,10 @@ app.get("/account", function(req, res){
 
     let redirectURL = (session_id && username)
     ? "/exit" //TEMP
-    : "/login"
-
+    : "/login";
+    if(redirectURL ==  "/exit"){
+        USER_CONTROLLER.logout(username);
+    }
     res.redirect(redirectURL)
 })
 
@@ -111,9 +113,9 @@ app.post("/create-account", async function(req, res) {
         res.redirect("/signup?failed=true")
     }
     else{
-        USER_CONTROLLER.addUser(username, pwd)
-        USER_CONTROLLER.login(username)
+        USER_CONTROLLER.addUser(username, pwd);
         let session_id = uuid.v4();
+        USER_CONTROLLER.login(username, session_id);
         res.redirect(`/?username=${username}&session_id=${session_id}`) //res.redirect("back")
     }
 })
@@ -134,8 +136,8 @@ app.post("/check-login", async function(req, res) {
     let userDatum = await USER_CONTROLLER.getUserFromUsername(username)
     
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
-        USER_CONTROLLER.login(username)
         let session_id = uuid.v4();
+        USER_CONTROLLER.login(username, session_id);
         res.redirect(`/?username=${username}&session_id=${session_id}`)
     }
     else{
@@ -145,10 +147,11 @@ app.post("/check-login", async function(req, res) {
 
 app.post('/addtocart', function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        let username = req.body.username
-        if (username != null){
-                USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost);
-                res.status(204).send();
+        let username = req.body.username;
+        let sessionId = req.body.session_id;
+        if (USER_CONTROLLER.loggedIn(username, sessionId)){
+            USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost);
+            res.status(204).send();
         }
         else{
             res.status(401).send()
@@ -162,8 +165,9 @@ app.post('/addtocart', function(req, res){
 app.post('/updateCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
         let username = req.body.username
-        if (username != null){
-            USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost, req.body.quantity);
+        let sessionId = req.body.session_id;
+        if (await USER_CONTROLLER.loggedIn(username, sessionId)){
+            await USER_CONTROLLER.updateQuantity(username, req.body.title, req.body.cost, req.body.quantity);
             let cost = await USER_CONTROLLER.totalCostOfCart(username);
             res.status(204).send(JSON.stringify(cost));
         }
@@ -178,8 +182,9 @@ app.post('/updateCart', async function(req, res){
 
 app.get('/sizeOfCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        const username = req.header('username');
-        if (username){
+        let username = req.header('username');
+        let sessionId = req.header('session_id');
+        if (USER_CONTROLLER.loggedIn(username, sessionId)){
             let cart_size = await USER_CONTROLLER.sizeOfCart(username);
             res.status(200).send(JSON.stringify(cart_size));
         }
@@ -194,8 +199,9 @@ app.get('/sizeOfCart', async function(req, res){
 
 app.get('/userCart', async function(req, res){
     if(req.header('Content-type') === 'application/json'){
-        const username = req.header('username');
-        if (username != null){
+        let username = req.header('username');
+        let sessionId = req.header('session_id');
+        if (USER_CONTROLLER.loggedIn(username, sessionId)){
             // if (user.sessionId === req.body.sessionId){
             let cart = await USER_CONTROLLER.getCart(username);
             let cost = await USER_CONTROLLER.totalCostOfCart(username);

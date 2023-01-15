@@ -4,6 +4,7 @@ e.g. carts, users etc
 const mongoose = require('mongoose');
 const DATABASE_URL = require("../connectToDB.js")
 const User = require("./user.js");
+const Session = require("./session.js");
 
 const USER_CONTROLLER = {
     addUser: async function(newUsername, newPassword){
@@ -49,7 +50,7 @@ const USER_CONTROLLER = {
             if(i.title === title){
                 if(quan !== -1){
                     if (quan === 0){
-                        user_cart.filter(function(value){
+                        user_cart = user_cart.filter(function(value){
                             return value !== i;
                         });
                     }
@@ -93,11 +94,26 @@ const USER_CONTROLLER = {
         return total_cost
     },
 
-    login: async function(username){
+    login: async function(user_name, sessionId){
+        let res = await Session.find({username: user_name});
+        if(!res.length){
+            let newUserObj = new Session({session_id: sessionId, username: user_name});
+            newUserObj.save();
+        }
+        else{
+            let up = await Session.updateOne({username: user_name}, {session_id: sessionId});
+            // console.log(up);
+        }
     },
 
     logout: async function(username){
+        let del = await Session.deleteOne({username: username});
+        // console.log(del);
+    },
 
+    loggedIn: async function(user_name, sessionId){
+        let res = await Session.find({username: user_name});
+        return res[0].session_id === sessionId && res[0].username === user_name;
     }
 }
 
