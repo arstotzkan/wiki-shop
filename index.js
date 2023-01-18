@@ -138,7 +138,7 @@ app.post("/check-login", async function(req, res) {
     if (userDatum && USER_CONTROLLER.userDataIsCorrect(userDatum, username, pwd) ){
         let session_id = uuid.v4();
         USER_CONTROLLER.login(username, session_id);
-        res.redirect(`/?username=${username}&session_id=${session_id}`)
+        res.redirect(`/?username=${userDatum.name}&session_id=${session_id}`)
     }
     else{
        res.redirect("/login?failed=true")//res.redirect("back")

@@ -23,7 +23,7 @@ const USER_CONTROLLER = {
 
     getUserFromUsername: async function(username){
         await mongoose.connect(DATABASE_URL);
-        let result = await User.find({name: username});
+        let result = await User.find({name_lower: username.toLowerCase()});
         return result[0];
     },
 
@@ -34,7 +34,7 @@ const USER_CONTROLLER = {
     },
 
     userDataIsCorrect: function(userObj, username, password){
-        return userObj.name === username && userObj.password === password
+        return userObj.name.toLowerCase() === username.toLowerCase() && userObj.password === password
     },
 
     getCart: async function(username){
