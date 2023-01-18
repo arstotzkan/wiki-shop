@@ -374,6 +374,12 @@ input[type=number] {
     padding-right: 0.5rem;
 }
 
+#shop-subtitle h6
+{
+    margin: 0;
+    color: #d7d7d7;
+}
+
 /* // Medium devices (tablets, 768px and down) */
 @media (max-width: 768px) {
 
@@ -391,16 +397,16 @@ input[type=number] {
         height: auto;
     }
 
-    #shop-name, #search-bar {
+    #shop-name, #shop-subtitle {
         flex: 1 0 60%;
         width: 100%; 
         justify-self: center;
     }
 
-    #search-bar{
+    #shop-subtitle{
         height: 1.5rem;
     }
-
+    
     #shop-name {
         padding-top: 0.5rem;
         text-align: center;
